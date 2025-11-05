@@ -48,7 +48,7 @@ jobs:
             }
           - {
               name: "whitelabelairport-core-linux-amd64",
-              os: "ubuntu-20.04",
+              os: "ubuntu-latest",
               target: "linux-amd64",
             }
           - {
@@ -59,12 +59,12 @@ jobs:
             }
           - {
               name: "whitelabelairport-core-macos-universal",
-              os: "macos-12",
+              os: "macos-latest",
               target: "macos-universal",
             }
           - {
               name: "whitelabelairport-core-ios",
-              os: "macos-12",
+              os: "macos-latest",
               target: "ios",
             }
           # linux custom
@@ -74,7 +74,7 @@ jobs:
               goarch: amd64,
               goamd64: v1,
               target: "linux-custom",
-              os: "ubuntu-20.04",
+              os: "ubuntu-latest",
             }
           - {
               name: whitelabelairport-cli-linux-amd64-v3,
@@ -82,98 +82,21 @@ jobs:
               goarch: amd64,
               goamd64: v3,
               target: "linux-custom",
-              os: "ubuntu-20.04",
+              os: "ubuntu-latest",
             }
           - {
               name: whitelabelairport-cli-linux-386,
               goos: linux,
               goarch: 386,
               target: "linux-custom",
-              os: "ubuntu-20.04",
+              os: "ubuntu-latest",
             }
           - {
               name: whitelabelairport-cli-linux-arm64,
               goos: linux,
               goarch: arm64,
               target: "linux-custom",
-              os: "ubuntu-20.04",
-            }
-          - {
-              name: whitelabelairport-cli-linux-armv5,
-              goos: linux,
-              goarch: arm,
-              goarm: 5,
-              target: "linux-custom",
-              os: "ubuntu-20.04",
-            }
-          - {
-              name: whitelabelairport-cli-linux-armv6,
-              goos: linux,
-              goarch: arm,
-              goarm: 6,
-              target: "linux-custom",
-              os: "ubuntu-20.04",
-            }
-          - {
-              name: whitelabelairport-cli-linux-armv7,
-              goos: linux,
-              goarch: arm,
-              goarm: 7,
-              target: "linux-custom",
-              os: "ubuntu-20.04",
-            }
-          - {
-              name: whitelabelairport-cli-linux-mips-softfloat,
-              goos: linux,
-              goarch: mips,
-              gomips: softfloat,
-              target: "linux-custom",
-              os: "ubuntu-20.04",
-            }
-          - {
-              name: whitelabelairport-cli-linux-mips-hardfloat,
-              goos: linux,
-              goarch: mips,
-              gomips: hardfloat,
-              target: "linux-custom",
-              os: "ubuntu-20.04",
-            }
-          - {
-              name: whitelabelairport-cli-linux-mipsel-softfloat,
-              goos: linux,
-              goarch: mipsle,
-              gomips: softfloat,
-              target: "linux-custom",
-              os: "ubuntu-20.04",
-            }
-          - {
-              name: whitelabelairport-cli-linux-mipsel-hardfloat,
-              goos: linux,
-              goarch: mipsle,
-              gomips: hardfloat,
-              target: "linux-custom",
-              os: "ubuntu-20.04",
-            }
-          - {
-              name: whitelabelairport-cli-linux-mips64,
-              goos: linux,
-              goarch: mips64,
-              target: "linux-custom",
-              os: "ubuntu-20.04",
-            }
-          - {
-              name: whitelabelairport-cli-linux-mips64el,
-              goos: linux,
-              goarch: mips64le,
-              target: "linux-custom",
-              os: "ubuntu-20.04",
-            }
-          - {
-              name: whitelabelairport-cli-linux-s390x,
-              goos: linux,
-              goarch: s390x,
-              target: "linux-custom",
-              os: "ubuntu-20.04",
+              os: "ubuntu-latest",
             }
 
     runs-on: ${{ matrix.job.os }}
