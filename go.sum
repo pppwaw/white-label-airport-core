@@ -270,6 +270,8 @@ github.com/hashicorp/yamux v0.1.1 h1:yrQxtgseBDrq9Y652vSRDvsKCJKOUD+GzTS4Y0Y8pvE
 github.com/hashicorp/yamux v0.1.1/go.mod h1:CtWFDAQgb7dxtzFs4tWbplKIe2jSi3+5vKbgIO0SLnQ=
 github.com/hiddify/hiddify-app-demo-extension v0.0.0-20241001070003-26039f960ad6 h1:ZErxaLRV5iWCBAR8qsyoNemEKntE4WSvK00Ts4zbS84=
 github.com/hiddify/hiddify-app-demo-extension v0.0.0-20241001070003-26039f960ad6/go.mod h1:1F56GeIkSjUJF0VP/zPS9rJhVc97TjEQsDTFhmr9Ddc=
+github.com/hiddify/hiddify-core v1.9.1-0.20241001065750-4a521ba61013 h1:nIxDEJJXgfBR30FKRLfAv90cLun1bUibSmpZAekj53o=
+github.com/hiddify/hiddify-core v1.9.1-0.20241001065750-4a521ba61013/go.mod h1:JTT3R2PWEds2iH408EzxY80e96zq4rwrj+bDflUnBgw=
 github.com/hiddify/hiddify-ip-scanner-extension v0.0.0-20241001070353-7ffd688b96b2 h1:cEzfvap7MfInrl15PWkt7761D/hc7JYVwFLIek3CGm8=
 github.com/hiddify/hiddify-ip-scanner-extension v0.0.0-20241001070353-7ffd688b96b2/go.mod h1:/jZoGToOSqviabjNGrwRA5UsiO6EggHsRDaMK3sCHw8=
 github.com/hiddify/hiddify-sing-box v1.8.9-0.20240928213625-7b79bf0c814d h1:+jTGlmOl+Kt3JEU1pt5yIItpi6nKKqUIUf76jkONHgQ=
@@ -331,7 +333,6 @@ github.com/konsorten/go-windows-terminal-sequences v1.0.1/go.mod h1:T0+1ngSBFLxv
 github.com/konsorten/go-windows-terminal-sequences v1.0.3/go.mod h1:T0+1ngSBFLxvqU3pZ+m/2kptfBszLMUkC4ZK/EgS/cQ=
 github.com/kr/logfmt v0.0.0-20140226030751-b84e30acd515/go.mod h1:+0opPa2QZZtGFBFZlji/RkVcI2GknAs/DXo4wKdlNEc=
 github.com/kr/pretty v0.1.0/go.mod h1:dAy3ld7l9f0ibDNOQOHHMYYIIbhfbHSm3C4ZsoJORNo=
-github.com/kr/pretty v0.2.1/go.mod h1:ipq/a2n7PKx3OHsz4KJII5eveXtPO4qwEXGdVfWzfnI=
 github.com/kr/pretty v0.3.1 h1:flRD4NNwYAUpkphVc1HcthR4KEIFJ65n8Mw5qdRn3LE=
 github.com/kr/pretty v0.3.1/go.mod h1:hoEshYVHaxMs3cyo3Yncou5ZscifuDolrwPKZanG3xk=
 github.com/kr/pty v1.1.1/go.mod h1:pFQYn66WHrOpPYNljwOMqo10TkYh1fy3cYio2l3bCsQ=
