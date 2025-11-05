@@ -57,47 +57,47 @@ jobs:
               target: "windows-amd64",
               aarch: "x64",
             }
-          - {
-              name: "whitelabelairport-core-macos-universal",
-              os: "macos-latest",
-              target: "macos-universal",
-            }
-          - {
-              name: "whitelabelairport-core-ios",
-              os: "macos-latest",
-              target: "ios",
-            }
-          # linux custom
-          - {
-              name: whitelabelairport-cli-linux-amd64,
-              goos: linux,
-              goarch: amd64,
-              goamd64: v1,
-              target: "linux-custom",
-              os: "ubuntu-latest",
-            }
-          - {
-              name: whitelabelairport-cli-linux-amd64-v3,
-              goos: linux,
-              goarch: amd64,
-              goamd64: v3,
-              target: "linux-custom",
-              os: "ubuntu-latest",
-            }
-          - {
-              name: whitelabelairport-cli-linux-386,
-              goos: linux,
-              goarch: 386,
-              target: "linux-custom",
-              os: "ubuntu-latest",
-            }
-          - {
-              name: whitelabelairport-cli-linux-arm64,
-              goos: linux,
-              goarch: arm64,
-              target: "linux-custom",
-              os: "ubuntu-latest",
-            }
+          # - {
+          #     name: "whitelabelairport-core-macos-universal",
+          #     os: "macos-latest",
+          #     target: "macos-universal",
+          #   }
+          # - {
+          #     name: "whitelabelairport-core-ios",
+          #     os: "macos-latest",
+          #     target: "ios",
+          #   }
+          # # linux custom
+          # - {
+          #     name: whitelabelairport-cli-linux-amd64,
+          #     goos: linux,
+          #     goarch: amd64,
+          #     goamd64: v1,
+          #     target: "linux-custom",
+          #     os: "ubuntu-latest",
+          #   }
+          # - {
+          #     name: whitelabelairport-cli-linux-amd64-v3,
+          #     goos: linux,
+          #     goarch: amd64,
+          #     goamd64: v3,
+          #     target: "linux-custom",
+          #     os: "ubuntu-latest",
+          #   }
+          # - {
+          #     name: whitelabelairport-cli-linux-386,
+          #     goos: linux,
+          #     goarch: 386,
+          #     target: "linux-custom",
+          #     os: "ubuntu-latest",
+          #   }
+          # - {
+          #     name: whitelabelairport-cli-linux-arm64,
+          #     goos: linux,
+          #     goarch: arm64,
+          #     target: "linux-custom",
+          #     os: "ubuntu-latest",
+          #   }
 
     runs-on: ${{ matrix.job.os }}
     env:
