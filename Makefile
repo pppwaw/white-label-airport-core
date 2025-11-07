@@ -29,7 +29,7 @@ lib_install:
 	npm install
 
 headers:
-	go build -buildmode=c-archive -o $(BINDIR)/$(LIBNAME).h ./custom
+	go build -buildmode=c-archive -o $(BINDIR)/$(LIBNAME).a ./custom
 
 android: lib_install
 	gomobile bind -v -androidapi=21 -javapkg=io.nekohasekai -libname=box -tags=$(TAGS) -trimpath -target=android -o $(BINDIR)/$(LIBNAME).aar github.com/sagernet/sing-box/experimental/libbox ./mobile
