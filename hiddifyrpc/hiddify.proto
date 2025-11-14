@@ -127,6 +127,10 @@ message ChangeHiddifySettingsRequest {
   string hiddify_settings_json = 1;
 }
 
+message HiddifySettingsResponse {
+  string hiddify_settings_json = 1;
+}
+
 message GenerateConfigRequest {
   string path = 1;
   string temp_path = 2;
@@ -156,6 +160,13 @@ message GenerateWarpConfigRequest {
 
 message SetSystemProxyEnabledRequest {
   bool is_enabled = 1;
+}
+
+message ConfigCapabilityResponse {
+  bool supports_tls_fragment = 1;
+  bool supports_quic = 2;
+  bool supports_ech = 3;
+  string schema_version = 4;
 }
 
 enum LogLevel {
@@ -207,6 +218,7 @@ service Core {
   rpc Setup (SetupRequest) returns (Response);
   rpc Parse (ParseRequest) returns (ParseResponse);
   rpc ChangeHiddifySettings (ChangeHiddifySettingsRequest) returns (CoreInfoResponse);
+  rpc GetHiddifySettings (Empty) returns (HiddifySettingsResponse);
   //rpc GenerateConfig (GenerateConfigRequest) returns (GenerateConfigResponse);
   rpc StartService (StartRequest) returns (CoreInfoResponse);
   rpc Stop (Empty) returns (CoreInfoResponse);
@@ -216,6 +228,7 @@ service Core {
   rpc GenerateWarpConfig (GenerateWarpConfigRequest) returns (WarpGenerationResponse);
   rpc GetSystemProxyStatus (Empty) returns (SystemProxyStatus);
   rpc SetSystemProxyEnabled (SetSystemProxyEnabledRequest) returns (Response);
+  rpc GetConfigCapabilities (Empty) returns (ConfigCapabilityResponse);
   rpc LogListener (Empty) returns (stream LogMessage); 
 }
 

@@ -10,7 +10,6 @@ import (
 	"github.com/hiddify/hiddify-core/v2"
 
 	_ "github.com/sagernet/gomobile"
-	"github.com/sagernet/sing-box/option"
 )
 
 func Setup(baseDir string, workingDir string, tempDir string, debug bool) error {
@@ -32,8 +31,7 @@ func BuildConfig(path string, HiddifyOptionsJson string) (string, error) {
 	if err != nil {
 		return "", err
 	}
-	var options option.Options
-	err = options.UnmarshalJSON(fileContent)
+	options, err := config.UnmarshalOptions(fileContent)
 	if err != nil {
 		return "", err
 	}
@@ -42,23 +40,5 @@ func BuildConfig(path string, HiddifyOptionsJson string) (string, error) {
 	if err != nil {
 		return "", nil
 	}
-	if HiddifyOptions.Warp.WireguardConfigStr != "" {
-		err := json.Unmarshal([]byte(HiddifyOptions.Warp.WireguardConfigStr), &HiddifyOptions.Warp.WireguardConfig)
-		if err != nil {
-			return "", err
-		}
-	}
-
-	if HiddifyOptions.Warp2.WireguardConfigStr != "" {
-		err := json.Unmarshal([]byte(HiddifyOptions.Warp2.WireguardConfigStr), &HiddifyOptions.Warp2.WireguardConfig)
-		if err != nil {
-			return "", err
-		}
-	}
-
-	return config.BuildConfigJson(*HiddifyOptions, options)
-}
-
-func GenerateWarpConfig(licenseKey string, accountId string, accessToken string) (string, error) {
-	return config.GenerateWarpAccount(licenseKey, accountId, accessToken)
+	return config.BuildConfigJson(*HiddifyOptions, *options)
 }

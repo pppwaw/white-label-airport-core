@@ -1,6 +1,10 @@
 package config
 
 import (
+	"encoding/json"
+	"os"
+	"path/filepath"
+
 	"github.com/sagernet/sing-box/option"
 	dns "github.com/sagernet/sing-dns"
 )
@@ -17,11 +21,9 @@ type HiddifyOptions struct {
 	UseXrayCoreWhenPossible bool   `json:"use-xray-core-when-possible"`
 	// GeoIPPath        string      `json:"geoip-path"`
 	// GeoSitePath      string      `json:"geosite-path"`
-	Rules     []Rule      `json:"rules"`
-	Warp      WarpOptions `json:"warp"`
-	Warp2     WarpOptions `json:"warp2"`
-	Mux       MuxOptions  `json:"mux"`
-	TLSTricks TLSTricks   `json:"tls-tricks"`
+	Rules     []Rule     `json:"rules"`
+	Mux       MuxOptions `json:"mux"`
+	TLSTricks TLSTricks  `json:"tls-tricks"`
 	DNSOptions
 	InboundOptions
 	URLTestOptions
@@ -77,21 +79,6 @@ type MuxOptions struct {
 	Padding    bool   `json:"padding"`
 	MaxStreams int    `json:"max-streams"`
 	Protocol   string `json:"protocol"`
-}
-
-type WarpOptions struct {
-	Id                 string              `json:"id"`
-	EnableWarp         bool                `json:"enable"`
-	Mode               string              `json:"mode"`
-	WireguardConfigStr string              `json:"wireguard-config"`
-	WireguardConfig    WarpWireguardConfig `json:"wireguardConfig"` // TODO check
-	FakePackets        string              `json:"noise"`
-	FakePacketSize     string              `json:"noise-size"`
-	FakePacketDelay    string              `json:"noise-delay"`
-	FakePacketMode     string              `json:"noise-mode"`
-	CleanIP            string              `json:"clean-ip"`
-	CleanPort          uint16              `json:"clean-port"`
-	Account            WarpAccount
 }
 
 func DefaultHiddifyOptions() *HiddifyOptions {
@@ -152,4 +139,48 @@ func DefaultHiddifyOptions() *HiddifyOptions {
 		},
 		UseXrayCoreWhenPossible: false,
 	}
+}
+
+func NormalizeHiddifyOptions(opt *HiddifyOptions) (*HiddifyOptions, error) {
+	if opt == nil {
+		return DefaultHiddifyOptions(), nil
+	}
+	defaults := DefaultHiddifyOptions()
+	raw, err := json.Marshal(opt)
+	if err != nil {
+		return nil, err
+	}
+	if err := json.Unmarshal(raw, defaults); err != nil {
+		return nil, err
+	}
+	return defaults, nil
+}
+
+func LoadHiddifyOptions(path string) (*HiddifyOptions, error) {
+	content, err := os.ReadFile(path)
+	if err != nil {
+		if os.IsNotExist(err) {
+			return DefaultHiddifyOptions(), nil
+		}
+		return nil, err
+	}
+	var opt HiddifyOptions
+	if err := json.Unmarshal(content, &opt); err != nil {
+		return nil, err
+	}
+	return NormalizeHiddifyOptions(&opt)
+}
+
+func SaveHiddifyOptions(path string, opt *HiddifyOptions) error {
+	if opt == nil {
+		opt = DefaultHiddifyOptions()
+	}
+	if err := os.MkdirAll(filepath.Dir(path), 0o755); err != nil {
+		return err
+	}
+	data, err := json.MarshalIndent(opt, "", "  ")
+	if err != nil {
+		return err
+	}
+	return os.WriteFile(path, data, 0o644)
 }

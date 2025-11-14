@@ -8,7 +8,6 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/sagernet/sing-box/option"
 	"google.golang.org/grpc"
 )
 
@@ -38,15 +37,11 @@ func (s *server) GenerateFullConfig(ctx context.Context, in *GenerateConfigReque
 	if err != nil {
 		return nil, err
 	}
-	var options option.Options
-	err = options.UnmarshalJSON(content)
+	options, err := UnmarshalOptions(content)
 	if err != nil {
 		return nil, err
 	}
-	if err != nil {
-		return nil, err
-	}
-	config, err := BuildConfigJson(*DefaultHiddifyOptions(), options)
+	config, err := BuildConfigJson(*DefaultHiddifyOptions(), *options)
 	if err != nil {
 		return nil, err
 	}

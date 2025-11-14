@@ -1,4 +1,6 @@
+//go:build cgo
 // +build cgo
+
 package bridge
 
 // #include "stdint.h"

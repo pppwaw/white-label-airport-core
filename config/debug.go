@@ -2,13 +2,14 @@ package config
 
 import (
 	"bytes"
-	"encoding/json"
 	"fmt"
 	"os"
 	"path/filepath"
 	"runtime/debug"
 
 	"github.com/sagernet/sing-box/option"
+
+	json "github.com/sagernet/sing/common/json"
 )
 
 func SaveCurrentConfig(path string, options option.Options) error {
@@ -26,7 +27,7 @@ func SaveCurrentConfig(path string, options option.Options) error {
 
 func ToJson(options option.Options) (string, error) {
 	var buffer bytes.Buffer
-	encoder := json.NewEncoder(&buffer)
+	encoder := json.NewEncoderContext(OptionsContext(), &buffer)
 	encoder.SetIndent("", "  ")
 	// fmt.Printf("%+v\n", options)
 	err := encoder.Encode(options)

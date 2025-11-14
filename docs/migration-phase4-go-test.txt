@@ -1,0 +1,14 @@
+# github.com/hiddify/hiddify-core/config [github.com/hiddify/hiddify-core/config.test]
+config/config.go:161:3: unknown field URLTestOptions in struct literal of type option.Outbound
+config/config.go:164:22: undefined: option.Duration
+config/config.go:167:38: undefined: option.Duration
+config/config.go:181:3: unknown field SelectorOptions in struct literal of type option.Outbound
+config/config.go:204:5: unknown field DirectOptions in struct literal of type option.Outbound
+config/config.go:207:7: unknown field TLSFragment in struct literal of type option.DialerOptions
+config/config.go:207:27: undefined: option.TLSFragmentOptions
+config/config.go:273:4: unknown field TunOptions in struct literal of type option.Inbound
+config/config.go:289:15: tunInbound.TunOptions undefined (type option.Inbound has no field or method TunOptions)
+config/config.go:293:15: tunInbound.TunOptions undefined (type option.Inbound has no field or method TunOptions)
+config/config.go:293:15: too many errors
+FAIL	github.com/hiddify/hiddify-core/config [build failed]
+FAIL

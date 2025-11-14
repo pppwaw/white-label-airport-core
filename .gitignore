@@ -10,3 +10,7 @@ cert
 node_modules
 *.db
 *.json
+.pnpm-store
+.cache
+.gomodcache
+.gocache

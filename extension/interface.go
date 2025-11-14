@@ -4,9 +4,9 @@ import (
 	"fmt"
 
 	"github.com/hiddify/hiddify-core/v2/db"
-	"github.com/sagernet/sing-box/log"
-
 	"github.com/hiddify/hiddify-core/v2/service_manager"
+	"github.com/sagernet/sing-box/adapter"
+	"github.com/sagernet/sing-box/log"
 )
 
 var (
@@ -48,11 +48,18 @@ func loadExtension(factory ExtensionFactory) error {
 	return nil
 }
 
-type extensionService struct {
-	// Storage *CacheFile
-}
+const (
+	extensionServiceTag  = "hiddify-extension"
+	extensionServiceType = "extension"
+)
 
-func (s *extensionService) Start() error {
+type extensionService struct{}
+
+func (s *extensionService) Start(stage adapter.StartStage) error {
+	if stage != adapter.StartStateStart {
+		return nil
+	}
+
 	table := db.GetTable[extensionData]()
 
 	for _, factory := range allExtensionsMap {
@@ -88,4 +95,12 @@ func (s *extensionService) Close() error {
 
 func init() {
 	service_manager.Register(&extensionService{})
+}
+
+func (s *extensionService) Type() string {
+	return extensionServiceType
+}
+
+func (s *extensionService) Tag() string {
+	return extensionServiceTag
 }

@@ -2,18 +2,15 @@ package config
 
 import (
 	"bytes"
-	"context"
 	_ "embed"
-	"encoding/json"
 	"fmt"
 	"os"
 	"path/filepath"
 
-	"github.com/hiddify/ray2sing/ray2sing"
 	"github.com/sagernet/sing-box/experimental/libbox"
 	"github.com/sagernet/sing-box/option"
-	"github.com/sagernet/sing/common/batch"
 	SJ "github.com/sagernet/sing/common/json"
+	json "github.com/sagernet/sing/common/json"
 	"github.com/xmdhs/clash2singbox/convert"
 	"github.com/xmdhs/clash2singbox/model/clash"
 	"gopkg.in/yaml.v3"
@@ -36,12 +33,7 @@ func ParseConfigContentToOptions(contentstr string, debug bool, configOpt *Hiddi
 	if err != nil {
 		return nil, err
 	}
-	var options option.Options
-	err = json.Unmarshal(content, &options)
-	if err != nil {
-		return nil, err
-	}
-	return &options, nil
+	return UnmarshalOptions(content)
 }
 
 func ParseConfigContent(contentstr string, debug bool, configOpt *HiddifyOptions, fullConfig bool) ([]byte, error) {
@@ -71,15 +63,12 @@ func ParseConfigContent(contentstr string, debug bool, configOpt *HiddifyOptions
 			return nil, fmt.Errorf("[SingboxParser] Incorrect Json Format")
 		}
 
-		newContent, _ := json.MarshalIndent(jsonObj, "", "  ")
+		newContent, _ := json.Marshal(jsonObj)
 
-		return patchConfig(newContent, "SingboxParser", configOpt)
+		return patchConfig(newContent, "SingboxParser")
 	}
 
-	v2rayStr, err := ray2sing.Ray2Singbox(string(content), configOpt.UseXrayCoreWhenPossible)
-	if err == nil {
-		return patchConfig([]byte(v2rayStr), "V2rayParser", configOpt)
-	}
+	fmt.Printf("Ray/V2Ray 解析已停用，尝试使用 Clash 配置\n")
 	fmt.Printf("Convert using clash\n")
 	clashObj := clash.Clash{}
 	if err := yaml.Unmarshal(content, &clashObj); err == nil && clashObj.Proxies != nil {
@@ -95,39 +84,26 @@ func ParseConfigContent(contentstr string, debug bool, configOpt *HiddifyOptions
 		if err != nil {
 			return nil, fmt.Errorf("[ClashParser] patching clash config error: %w", err)
 		}
-		return patchConfig(output, "ClashParser", configOpt)
+		return patchConfig(output, "ClashParser")
 	}
 
 	return nil, fmt.Errorf("unable to determine config format")
 }
 
-func patchConfig(content []byte, name string, configOpt *HiddifyOptions) ([]byte, error) {
-	options := option.Options{}
-	err := json.Unmarshal(content, &options)
+func patchConfig(content []byte, name string) ([]byte, error) {
+	options, err := UnmarshalOptions(content)
 	if err != nil {
 		return nil, fmt.Errorf("[SingboxParser] unmarshal error: %w", err)
 	}
-	b, _ := batch.New(context.Background(), batch.WithConcurrencyNum[*option.Outbound](2))
-	for _, base := range options.Outbounds {
-		out := base
-		b.Go(base.Tag, func() (*option.Outbound, error) {
-			err := patchWarp(&out, configOpt, false, nil)
-			if err != nil {
-				return nil, fmt.Errorf("[Warp] patch warp error: %w", err)
-			}
-			// options.Outbounds[i] = base
-			return &out, nil
-		})
-	}
-	if res, err := b.WaitAndGetResult(); err != nil {
-		return nil, err
-	} else {
-		for i, base := range options.Outbounds {
-			options.Outbounds[i] = *res[base.Tag].Value
-		}
-	}
 
-	content, _ = json.MarshalIndent(options, "", "  ")
+	var buffer bytes.Buffer
+	encoder := json.NewEncoderContext(OptionsContext(), &buffer)
+	encoder.SetIndent("", "  ")
+	err = encoder.Encode(options)
+	if err != nil {
+		return nil, fmt.Errorf("[SingboxParser] marshal error: %w", err)
+	}
+	content = buffer.Bytes()
 
 	fmt.Printf("%s\n", content)
 	return validateResult(content, name)

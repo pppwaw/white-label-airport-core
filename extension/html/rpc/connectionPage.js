@@ -1,12 +1,49 @@
 const {  hiddifyClient } = require('./client.js');
 const hiddify = require("./hiddify_grpc_web_pb.js");
 
+async function hydrateDefaults() {
+    await Promise.allSettled([loadHiddifySettings(), loadCapabilities()]);
+}
+
+async function loadHiddifySettings() {
+    const request = new hiddify.Empty();
+    try {
+        const response = await hiddifyClient.getHiddifySettings(request, {});
+        const currentValue = ($("#hiddify-settings").val() || "").trim();
+        if (!currentValue && response.getHiddifySettingsJson()) {
+            $("#hiddify-settings").val(response.getHiddifySettingsJson());
+        }
+    } catch (err) {
+        console.error("Failed to fetch Hiddify settings", err);
+    }
+}
+
+async function loadCapabilities() {
+    const request = new hiddify.Empty();
+    const capabilityList = $("#capability-list");
+    try {
+        const response = await hiddifyClient.getConfigCapabilities(request, {});
+        const rows = [
+            `TLS Fragmentation: ${response.getSupportsTlsFragment() ? "supported" : "not available"}`,
+            `QUIC: ${response.getSupportsQuic() ? "supported" : "not available"}`,
+            `ECH: ${response.getSupportsEch() ? "supported" : "not available"}`,
+            `Schema Version: ${response.getSchemaVersion() || "unknown"}`
+        ];
+        capabilityList.empty();
+        rows.forEach((line) => capabilityList.append($("<li>").text(line)));
+    } catch (err) {
+        capabilityList.empty().append($("<li>").text("Unable to load capabilities"));
+        console.error("Failed to load capabilities", err);
+    }
+}
+
 function openConnectionPage() {
     
         $("#extension-list-container").show();
         $("#extension-page-container").hide();
         $("#connection-page").show();
         connect();
+        hydrateDefaults();
         $("#connect-button").click(async () => {
             const hsetting_request = new hiddify.ChangeHiddifySettingsRequest();
             hsetting_request.setHiddifySettingsJson($("#hiddify-settings").val());

@@ -214,12 +214,7 @@ func updateConfigInterval(current ConfigResult, hiddifySettingPath string, confi
 }
 
 func readConfigBytes(content []byte) (*option.Options, error) {
-	var options option.Options
-	err := options.UnmarshalJSON(content)
-	if err != nil {
-		return nil, err
-	}
-	return &options, nil
+	return config.UnmarshalOptions(content)
 }
 
 func ReadHiddifyOptionsAt(path string) (*config.HiddifyOptions, error) {
@@ -231,18 +226,6 @@ func ReadHiddifyOptionsAt(path string) (*config.HiddifyOptions, error) {
 	err = json.Unmarshal(content, &options)
 	if err != nil {
 		return nil, err
-	}
-	if options.Warp.WireguardConfigStr != "" {
-		err := json.Unmarshal([]byte(options.Warp.WireguardConfigStr), &options.Warp.WireguardConfig)
-		if err != nil {
-			return nil, err
-		}
-	}
-	if options.Warp2.WireguardConfigStr != "" {
-		err := json.Unmarshal([]byte(options.Warp2.WireguardConfigStr), &options.Warp2.WireguardConfig)
-		if err != nil {
-			return nil, err
-		}
 	}
 	return &options, nil
 }

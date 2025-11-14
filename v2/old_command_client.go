@@ -26,12 +26,16 @@ func (cch *OldCommandClientHandler) Disconnected(message string) {
 	cch.logger.Debug("DISCONNECTED: ", message)
 }
 
-func (cch *OldCommandClientHandler) ClearLog() {
-	cch.logger.Debug("clear log")
+func (cch *OldCommandClientHandler) ClearLogs() {
+	cch.logger.Debug("clear logs")
 }
 
-func (cch *OldCommandClientHandler) WriteLog(message string) {
-	cch.logger.Debug("log: ", message)
+func (cch *OldCommandClientHandler) WriteLogs(messageList libbox.StringIterator) {
+	for messageList != nil && messageList.HasNext() {
+		message := messageList.Next()
+		cch.logger.Debug("log: ", message)
+		bridge.SendStringToPort(cch.port, message)
+	}
 }
 
 func (cch *OldCommandClientHandler) WriteStatus(message *libbox.StatusMessage) {
@@ -89,6 +93,10 @@ func (cch *OldCommandClientHandler) InitializeClashMode(modeList libbox.StringIt
 
 func (cch *OldCommandClientHandler) UpdateClashMode(newMode string) {
 	cch.logger.Debug("update clash mode: ", newMode)
+}
+
+func (cch *OldCommandClientHandler) WriteConnections(message *libbox.Connections) {
+	// Legacy bridge does not expose connections; ignore for now.
 }
 
 type OutboundGroup struct {

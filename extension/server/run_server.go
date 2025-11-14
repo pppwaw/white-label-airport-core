@@ -17,15 +17,71 @@ import (
 	"google.golang.org/grpc"
 )
 
-func StartTestExtensionServer() {
-	v2.Setup("./tmp", "./", "./tmp", 0, false)
-	StartExtensionServer()
+type ServerOptions struct {
+	BasePath    string
+	WorkingPath string
+	TempPath    string
+	GRPCAddr    string
+	WebAddr     string
+	StaticDir   string
+	CertPath    string
+	KeyPath     string
+	AutoSetup   bool
+	Headless    bool
 }
 
-func StartExtensionServer() {
-	grpc_server, _ := v2.StartCoreGrpcServer("127.0.0.1:12345")
+func DefaultServerOptions() ServerOptions {
+	return ServerOptions{
+		BasePath:    "./tmp",
+		WorkingPath: "./",
+		TempPath:    "./tmp",
+		GRPCAddr:    "127.0.0.1:12345",
+		WebAddr:     ":12346",
+		StaticDir:   "./extension/html",
+		CertPath:    "cert/server-cert.pem",
+		KeyPath:     "cert/server-key.pem",
+		AutoSetup:   true,
+	}
+}
+
+func StartTestExtensionServer() {
+	if err := StartExtensionServer(DefaultServerOptions()); err != nil {
+		log.Fatal(err)
+	}
+}
+
+func StartExtensionServer(opts ServerOptions) error {
+	if opts.GRPCAddr == "" {
+		opts.GRPCAddr = "127.0.0.1:12345"
+	}
+	if opts.AutoSetup {
+		if err := v2.Setup(opts.BasePath, opts.WorkingPath, opts.TempPath, 0, false); err != nil {
+			return err
+		}
+	}
+	grpcServer, err := v2.StartCoreGrpcServer(opts.GRPCAddr)
+	if err != nil {
+		return err
+	}
+	fmt.Printf("Extension gRPC listening on %s\n", opts.GRPCAddr)
+	if opts.Headless {
+		waitForShutdown(grpcServer)
+		return nil
+	}
+	if opts.WebAddr == "" {
+		opts.WebAddr = ":12346"
+	}
+	if opts.StaticDir == "" {
+		opts.StaticDir = "./extension/html"
+	}
+	if opts.CertPath == "" {
+		opts.CertPath = "cert/server-cert.pem"
+	}
+	if opts.KeyPath == "" {
+		opts.KeyPath = "cert/server-key.pem"
+	}
 	fmt.Printf("Waiting for CTRL+C to stop\n")
-	runWebserver(grpc_server)
+	return runWebserver(grpcServer, opts)
 }
 
 func allowCors(resp http.ResponseWriter, req *http.Request) {
@@ -38,80 +94,63 @@ func allowCors(resp http.ResponseWriter, req *http.Request) {
 	}
 }
 
-func runWebserver(grpcServer *grpc.Server) {
-	// Context for cancellation
+func runWebserver(grpcServer *grpc.Server, opts ServerOptions) error {
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
 
-	// Channels to signal termination
-	grpcTerminated := make(chan struct{})
-	grpcWebTerminated := make(chan struct{})
-
-	// Specify the directory to serve static files
-	dir := "./extension/html/"
-
-	// Wrapping gRPC server with grpc-web
 	grpcWeb := grpcweb.WrapServer(grpcServer)
+	fileServer := http.FileServer(http.Dir(opts.StaticDir))
 
-	// HTTP multiplexer
 	mux := http.NewServeMux()
 	mux.HandleFunc("/", func(resp http.ResponseWriter, req *http.Request) {
 		allowCors(resp, req)
-		if grpcWeb.IsGrpcWebRequest(req) || grpcWeb.IsAcceptableGrpcCorsRequest(req) {
+		if grpcWeb.IsGrpcWebRequest(req) || grpcWeb.IsAcceptableGrpcCorsRequest(req) || grpcWeb.IsGrpcWebSocketRequest(req) {
 			grpcWeb.ServeHTTP(resp, req)
-		} else {
-			http.DefaultServeMux.ServeHTTP(resp, req)
+			return
 		}
+		fileServer.ServeHTTP(resp, req)
 	})
 
-	// File server for static files
-	fs := http.FileServer(http.Dir(dir))
-	http.Handle("/", http.StripPrefix("/", fs))
-
-	// HTTP server for grpc-web
 	rpcWebServer := &http.Server{
 		Handler: mux,
-		Addr:    ":12346",
+		Addr:    opts.WebAddr,
 	}
-	log.Println("Serving grpc-web from https://localhost:12346/")
+	log.Printf("Serving grpc-web from https://%s/", opts.WebAddr)
 
-	// Add a goroutine for the grpc-web server
 	wg := sync.WaitGroup{}
 	wg.Add(1)
-
 	go func() {
 		defer wg.Done()
-		utils.GenerateCertificate("cert/server-cert.pem", "cert/server-key.pem", true, true)
-		if err := rpcWebServer.ListenAndServeTLS("cert/server-cert.pem", "cert/server-key.pem"); err != nil && err != http.ErrServerClosed {
-			// if err := rpcWebServer.ListenAndServe(); err != nil && err != http.ErrServerClosed {
+		utils.GenerateCertificate(opts.CertPath, opts.KeyPath, true, true)
+		if err := rpcWebServer.ListenAndServeTLS(opts.CertPath, opts.KeyPath); err != nil && err != http.ErrServerClosed {
 			fmt.Printf("Web server (gRPC-web) shutdown with error: %s", err)
 		}
 		grpcServer.Stop()
-		close(grpcWebTerminated) // Server terminated
 	}()
 
-	// Signal handling to gracefully shutdown
 	sigChan := make(chan os.Signal, 1)
 	signal.Notify(sigChan, syscall.SIGINT, syscall.SIGTERM)
 
 	select {
-	case <-ctx.Done(): // Context canceled
+	case <-ctx.Done():
 		log.Println("Context canceled, shutting down servers...")
-	case sig := <-sigChan: // OS signal received
+	case sig := <-sigChan:
 		log.Printf("Received signal: %s, shutting down servers...", sig)
-	case <-grpcTerminated: // Unexpected gRPC termination
-		log.Println("gRPC server terminated unexpectedly")
-	case <-grpcWebTerminated: // Unexpected gRPC-web termination
-		log.Println("gRPC-web server terminated unexpectedly")
 	}
 
-	// Graceful shutdown of the servers
 	if err := rpcWebServer.Shutdown(ctx); err != nil {
 		log.Printf("gRPC-web server shutdown with error: %s", err)
 	}
-	<-grpcWebTerminated
 
-	// Ensure all routines finish
 	wg.Wait()
 	log.Println("Server shutdown complete")
+	return nil
+}
+
+func waitForShutdown(grpcServer *grpc.Server) {
+	sigChan := make(chan os.Signal, 1)
+	signal.Notify(sigChan, syscall.SIGINT, syscall.SIGTERM)
+	sig := <-sigChan
+	log.Printf("Received signal: %s, shutting down gRPC server...", sig)
+	grpcServer.GracefulStop()
 }

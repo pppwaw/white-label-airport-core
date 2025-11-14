@@ -10,7 +10,7 @@ var (
 )
 
 func RegisterPreservice(service adapter.Service) {
-	preservices = append(services, service)
+	preservices = append(preservices, service)
 }
 
 func Register(service adapter.Service) {
@@ -18,16 +18,14 @@ func Register(service adapter.Service) {
 }
 
 func StartServices() error {
-	CloseServices()
-	for _, service := range preservices {
-		if err := service.Start(); err != nil {
-			return err
-		}
+	if err := CloseServices(); err != nil {
+		return err
 	}
-	for _, service := range services {
-		if err := service.Start(); err != nil {
-			return err
-		}
+	if err := startServiceList(preservices); err != nil {
+		return err
+	}
+	if err := startServiceList(services); err != nil {
+		return err
 	}
 	return nil
 }
@@ -41,6 +39,17 @@ func CloseServices() error {
 	for _, service := range preservices {
 		if err := service.Close(); err != nil {
 			return err
+		}
+	}
+	return nil
+}
+
+func startServiceList(list []adapter.Service) error {
+	for _, stage := range adapter.ListStartStages {
+		for _, service := range list {
+			if err := service.Start(stage); err != nil {
+				return err
+			}
 		}
 	}
 	return nil

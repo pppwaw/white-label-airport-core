@@ -14,6 +14,7 @@ import (
 	"github.com/sagernet/sing-box/option"
 	dns "github.com/sagernet/sing-dns"
 	grpc "google.golang.org/grpc"
+	"google.golang.org/grpc/credentials/insecure"
 )
 
 const (
@@ -85,7 +86,7 @@ func startTunnelRequest(opt HiddifyOptions, installService bool) (bool, error) {
 		}
 		return false, fmt.Errorf("service is not running")
 	}
-	conn, err := grpc.Dial("127.0.0.1:18020", grpc.WithInsecure())
+	conn, err := grpc.NewClient("127.0.0.1:18020", grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
 		log.Printf("did not connect: %v", err)
 	}

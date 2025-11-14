@@ -11,22 +11,26 @@ ifeq ($(OS),Windows_NT)
 Not available for Windows! use bash in WSL
 endif
 
-TAGS=with_gvisor,with_quic,with_wireguard,with_ech,with_utls,with_clash_api,with_grpc
+TAGS=with_gvisor,with_quic,with_wireguard,with_utls,with_clash_api,with_grpc
 IOS_ADD_TAGS=with_dhcp,with_low_memory,with_conntrack
 GOBUILDLIB=CGO_ENABLED=1 go build -trimpath -tags $(TAGS) -ldflags="-w -s" -buildmode=c-shared
 GOBUILDSRV=CGO_ENABLED=1 go build -ldflags "-s -w" -trimpath -tags $(TAGS)
+PNPM?=pnpm
+PROTOC?=protoc
+PROTOC_GEN_GRPC_WEB?=protoc-gen-grpc-web
 
 .PHONY: protos
 protos:
-	protoc --go_out=./ --go-grpc_out=./ --proto_path=hiddifyrpc hiddifyrpc/*.proto
-	protoc --js_out=import_style=commonjs,binary:./extension/html/rpc/ --grpc-web_out=import_style=commonjs,mode=grpcwebtext:./extension/html/rpc/ --proto_path=hiddifyrpc hiddifyrpc/*.proto
-	npx browserify extension/html/rpc/extension.js >extension/html/rpc.js
+	$(PROTOC) --go_out=./ --go-grpc_out=./ --proto_path=hiddifyrpc hiddifyrpc/*.proto
+	$(PNPM) exec grpc_tools_node_protoc --js_out=import_style=commonjs,binary:./extension/html/rpc/ --proto_path=hiddifyrpc hiddifyrpc/*.proto
+	$(PROTOC) --plugin=protoc-gen-grpc-web=$(PROTOC_GEN_GRPC_WEB) --grpc-web_out=import_style=commonjs,mode=grpcwebtext:./extension/html/rpc/ --proto_path=hiddifyrpc hiddifyrpc/*.proto
+	$(PNPM) exec browserify extension/html/rpc/extension.js >extension/html/rpc.js
 
 
 lib_install:
 	go install -v github.com/sagernet/gomobile/cmd/gomobile@v0.1.1
 	go install -v github.com/sagernet/gomobile/cmd/gobind@v0.1.1
-	npm install
+	$(PNPM) install --frozen-lockfile
 
 headers:
 	go build -buildmode=c-archive -o $(BINDIR)/$(LIBNAME).a ./custom
@@ -103,5 +107,3 @@ clean:
 release: # Create a new tag for release.	
 	@bash -c '.github/change_version.sh'
 	
-
-

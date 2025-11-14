@@ -15,13 +15,50 @@ import (
 	"github.com/sagernet/sing-box/log"
 )
 
+const configSchemaVersion = "1.12.12"
+
 var (
-	Box              *libbox.BoxService
-	HiddifyOptions   *config.HiddifyOptions
-	activeConfigPath string
-	coreLogFactory   log.Factory
-	useFlutterBridge bool = true
+	Box                 *libbox.BoxService
+	HiddifyOptions      *config.HiddifyOptions
+	activeConfigPath    string
+	coreLogFactory      log.Factory
+	useFlutterBridge    bool = true
+	hiddifySettingsFile string
 )
+
+func ensureHiddifyOptions() *config.HiddifyOptions {
+	if HiddifyOptions != nil {
+		return HiddifyOptions
+	}
+	if err := loadHiddifySettingsFromDisk(); err != nil {
+		log.Warn("failed to load Hiddify settings: ", err)
+	}
+	if HiddifyOptions == nil {
+		HiddifyOptions = config.DefaultHiddifyOptions()
+	}
+	return HiddifyOptions
+}
+
+func loadHiddifySettingsFromDisk() error {
+	if hiddifySettingsFile == "" {
+		return nil
+	}
+	opt, err := config.LoadHiddifyOptions(hiddifySettingsFile)
+	if err != nil {
+		return err
+	}
+	HiddifyOptions = opt
+	return nil
+}
+
+func persistHiddifySettings() {
+	if hiddifySettingsFile == "" || HiddifyOptions == nil {
+		return
+	}
+	if err := config.SaveHiddifyOptions(hiddifySettingsFile, HiddifyOptions); err != nil {
+		log.Warn("failed to persist Hiddify settings: ", err)
+	}
+}
 
 func StopAndAlert(msgType pb.MessageType, message string) {
 	SetCoreStatus(pb.CoreState_STOPPED, msgType, message)
@@ -74,6 +111,7 @@ func (s *CoreService) StartService(ctx context.Context, in *pb.StartRequest) (*p
 
 func StartService(in *pb.StartRequest) (*pb.CoreInfoResponse, error) {
 	Log(pb.LogLevel_DEBUG, pb.LogType_CORE, "Starting Core Service")
+	currentOptions := ensureHiddifyOptions()
 	content := in.ConfigContent
 	if content == "" {
 
@@ -100,14 +138,14 @@ func StartService(in *pb.StartRequest) (*pb.CoreInfoResponse, error) {
 	}
 	if !in.EnableRawConfig {
 		Log(pb.LogLevel_DEBUG, pb.LogType_CORE, "Building config")
-		parsedContent_tmp, err := config.BuildConfig(*HiddifyOptions, parsedContent)
+		parsedContentTmp, err := config.BuildConfig(*currentOptions, parsedContent)
 		if err != nil {
 			Log(pb.LogLevel_FATAL, pb.LogType_CORE, err.Error())
 			resp := SetCoreStatus(pb.CoreState_STOPPED, pb.MessageType_ERROR_BUILDING_CONFIG, err.Error())
 			StopAndAlert(pb.MessageType_UNEXPECTED_ERROR, err.Error())
 			return resp, err
 		}
-		parsedContent = *parsedContent_tmp
+		parsedContent = *parsedContentTmp
 	}
 	Log(pb.LogLevel_DEBUG, pb.LogType_CORE, "Saving config")
 	currentBuildConfigPath := filepath.Join(sWorkingPath, "current-config.json")
@@ -176,7 +214,8 @@ func Parse(in *pb.ParseRequest) (*pb.ParseResponse, error) {
 
 	}
 
-	config, err := config.ParseConfigContent(content, true, HiddifyOptions, false)
+	configOpt := ensureHiddifyOptions()
+	config, err := config.ParseConfigContent(content, true, configOpt, false)
 	if err != nil {
 		return &pb.ParseResponse{
 			ResponseCode: pb.ResponseCode_FAILED,
@@ -204,24 +243,38 @@ func (s *CoreService) ChangeHiddifySettings(ctx context.Context, in *pb.ChangeHi
 }
 
 func ChangeHiddifySettings(in *pb.ChangeHiddifySettingsRequest) (*pb.CoreInfoResponse, error) {
-	HiddifyOptions = config.DefaultHiddifyOptions()
-	err := json.Unmarshal([]byte(in.HiddifySettingsJson), HiddifyOptions)
+	var incoming config.HiddifyOptions
+	if err := json.Unmarshal([]byte(in.HiddifySettingsJson), &incoming); err != nil {
+		return nil, err
+	}
+	normalized, err := config.NormalizeHiddifyOptions(&incoming)
 	if err != nil {
 		return nil, err
 	}
-	if HiddifyOptions.Warp.WireguardConfigStr != "" {
-		err := json.Unmarshal([]byte(HiddifyOptions.Warp.WireguardConfigStr), &HiddifyOptions.Warp.WireguardConfig)
-		if err != nil {
-			return nil, err
-		}
-	}
-	if HiddifyOptions.Warp2.WireguardConfigStr != "" {
-		err := json.Unmarshal([]byte(HiddifyOptions.Warp2.WireguardConfigStr), &HiddifyOptions.Warp2.WireguardConfig)
-		if err != nil {
-			return nil, err
-		}
-	}
+	HiddifyOptions = normalized
+	persistHiddifySettings()
 	return &pb.CoreInfoResponse{}, nil
+}
+
+func (s *CoreService) GetHiddifySettings(ctx context.Context, _ *pb.Empty) (*pb.HiddifySettingsResponse, error) {
+	current := ensureHiddifyOptions()
+	data, err := json.Marshal(current)
+	if err != nil {
+		return nil, err
+	}
+	return &pb.HiddifySettingsResponse{
+		HiddifySettingsJson: string(data),
+	}, nil
+}
+
+func (s *CoreService) GetConfigCapabilities(ctx context.Context, _ *pb.Empty) (*pb.ConfigCapabilityResponse, error) {
+	ensureHiddifyOptions()
+	return &pb.ConfigCapabilityResponse{
+		SupportsTlsFragment: true,
+		SupportsQuic:        true,
+		SupportsEch:         true,
+		SchemaVersion:       configSchemaVersion,
+	}, nil
 }
 
 func (s *CoreService) GenerateConfig(ctx context.Context, in *pb.GenerateConfigRequest) (*pb.GenerateConfigResponse, error) {
@@ -233,10 +286,8 @@ func GenerateConfig(in *pb.GenerateConfigRequest) (*pb.GenerateConfigResponse, e
 		Log(pb.LogLevel_FATAL, pb.LogType_CONFIG, err.Error())
 		StopAndAlert(pb.MessageType_UNEXPECTED_ERROR, err.Error())
 	})
-	if HiddifyOptions == nil {
-		HiddifyOptions = config.DefaultHiddifyOptions()
-	}
-	config, err := generateConfigFromFile(in.Path, *HiddifyOptions)
+	current := ensureHiddifyOptions()
+	config, err := generateConfigFromFile(in.Path, *current)
 	if err != nil {
 		return nil, err
 	}

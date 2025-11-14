@@ -1,0 +1,35 @@
+?   	github.com/hiddify/hiddify-core/bridge	[no test files]
+# github.com/hiddify/ray2sing/ray2sing
+/root/go/pkg/mod/github.com/hiddify/ray2sing@v0.0.0-20240928221833-190b549d5222/ray2sing/common.go:53:3: unknown field TLSTricks in struct literal of type option.OutboundTLSOptions
+/root/go/pkg/mod/github.com/hiddify/ray2sing@v0.0.0-20240928221833-190b549d5222/ray2sing/common.go:76:58: undefined: option.TLSTricksOptions
+/root/go/pkg/mod/github.com/hiddify/ray2sing@v0.0.0-20240928221833-190b549d5222/ray2sing/common.go:77:18: undefined: option.TLSTricksOptions
+/root/go/pkg/mod/github.com/hiddify/ray2sing@v0.0.0-20240928221833-190b549d5222/ray2sing/common.go:90:59: undefined: option.TLSFragmentOptions
+/root/go/pkg/mod/github.com/hiddify/ray2sing@v0.0.0-20240928221833-190b549d5222/ray2sing/common.go:91:18: undefined: option.TLSFragmentOptions
+/root/go/pkg/mod/github.com/hiddify/ray2sing@v0.0.0-20240928221833-190b549d5222/ray2sing/common.go:161:47: undefined: option.Listable
+/root/go/pkg/mod/github.com/hiddify/ray2sing@v0.0.0-20240928221833-190b549d5222/ray2sing/common.go:172:68: undefined: option.Listable
+/root/go/pkg/mod/github.com/hiddify/ray2sing@v0.0.0-20240928221833-190b549d5222/ray2sing/udp_turn_relay.go:13:39: undefined: T.TurnRelayOptions
+/root/go/pkg/mod/github.com/hiddify/ray2sing@v0.0.0-20240928221833-190b549d5222/ray2sing/url_schema.go:28:42: undefined: T.TurnRelayOptions
+/root/go/pkg/mod/github.com/hiddify/ray2sing@v0.0.0-20240928221833-190b549d5222/ray2sing/beepass.go:59:3: unknown field ShadowsocksOptions in struct literal of type option.Outbound
+/root/go/pkg/mod/github.com/hiddify/ray2sing@v0.0.0-20240928221833-190b549d5222/ray2sing/common.go:172:68: too many errors
+FAIL	github.com/hiddify/hiddify-core/cli [build failed]
+?   	github.com/hiddify/hiddify-core/cli/bydll	[no test files]
+FAIL	github.com/hiddify/hiddify-core/cmd [build failed]
+?   	github.com/hiddify/hiddify-core/cmd/internal/build_libcore	[no test files]
+?   	github.com/hiddify/hiddify-core/cmd/internal/build_shared	[no test files]
+FAIL	github.com/hiddify/hiddify-core/config [build failed]
+FAIL	github.com/hiddify/hiddify-core/custom [build failed]
+FAIL	github.com/hiddify/hiddify-core/extension [build failed]
+FAIL	github.com/hiddify/hiddify-core/extension/repository [build failed]
+FAIL	github.com/hiddify/hiddify-core/extension/sdk [build failed]
+FAIL	github.com/hiddify/hiddify-core/extension/server [build failed]
+ok  	github.com/hiddify/hiddify-core/extension/ui	(cached) [no tests to run]
+?   	github.com/hiddify/hiddify-core/hiddifyrpc	[no test files]
+FAIL	github.com/hiddify/hiddify-core/mobile [build failed]
+?   	github.com/hiddify/hiddify-core/utils	[no test files]
+FAIL	github.com/hiddify/hiddify-core/v2 [build failed]
+?   	github.com/hiddify/hiddify-core/v2/common	[no test files]
+?   	github.com/hiddify/hiddify-core/v2/db	[no test files]
+?   	github.com/hiddify/hiddify-core/v2/example_client	[no test files]
+FAIL	github.com/hiddify/hiddify-core/v2/example_server [build failed]
+?   	github.com/hiddify/hiddify-core/v2/service_manager	[no test files]
+FAIL
