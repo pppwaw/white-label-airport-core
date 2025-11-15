@@ -1,2 +1,6 @@
 packages:
   - .
+
+onlyBuiltDependencies:
+  - grpc-tools
+  - protobufjs
