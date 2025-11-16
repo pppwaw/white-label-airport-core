@@ -7,9 +7,8 @@ import (
 	"path/filepath"
 
 	"github.com/kardianos/service"
+	"github.com/sagernet/sing/common/logger"
 )
-
-var logger service.Logger
 
 type hiddifyNext struct{}
 
@@ -62,22 +61,21 @@ func StartTunnelService(goArg string) (int, string) {
 	}
 
 	if len(goArg) > 0 && goArg != "run" {
-		return control(s, goArg)
+		return control_service(s, goArg)
 	}
 
-	logger, err = s.Logger(nil)
 	if err != nil {
 		log.Printf("Error: %v", err)
 	}
 	err = s.Run()
 	if err != nil {
-		logger.Error(err)
+		logger.NOP().Error(err)
 		return 3, fmt.Sprintf("Error: %v", err)
 	}
 	return 0, ""
 }
 
-func control(s service.Service, goArg string) (int, string) {
+func control_service(s service.Service, goArg string) (int, string) {
 	dolog := false
 	var err error
 	status, serr := s.Status()
@@ -94,12 +92,13 @@ func control(s service.Service, goArg string) (int, string) {
 		}
 		err = s.Uninstall()
 	case "start":
-		if status == service.StatusRunning {
+		switch status {
+		case service.StatusRunning:
 			if dolog {
 				fmt.Printf("Tunnel Service Already Running.\n")
 			}
 			return 0, "Tunnel Service Already Running."
-		} else if status == service.StatusUnknown {
+		case service.StatusUnknown:
 			s.Uninstall()
 			s.Install()
 			status, serr = s.Status()
