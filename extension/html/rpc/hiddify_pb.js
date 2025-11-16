@@ -13,7 +13,13 @@
 
 var jspb = require('google-protobuf');
 var goog = jspb;
-var global = globalThis;
+var global = (function() {
+  if (this) { return this; }
+  if (typeof window !== 'undefined') { return window; }
+  if (typeof global !== 'undefined') { return global; }
+  if (typeof self !== 'undefined') { return self; }
+  return Function('return this')();
+}.call(null));
 
 var base_pb = require('./base_pb.js');
 goog.object.extend(proto, base_pb);
@@ -647,9 +653,9 @@ proto.hiddifyrpc.CoreInfoResponse.prototype.toObject = function(opt_includeInsta
  */
 proto.hiddifyrpc.CoreInfoResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
-coreState: jspb.Message.getFieldWithDefault(msg, 1, 0),
-messageType: jspb.Message.getFieldWithDefault(msg, 2, 0),
-message: jspb.Message.getFieldWithDefault(msg, 3, "")
+    coreState: jspb.Message.getFieldWithDefault(msg, 1, 0),
+    messageType: jspb.Message.getFieldWithDefault(msg, 2, 0),
+    message: jspb.Message.getFieldWithDefault(msg, 3, "")
   };
 
   if (includeInstance) {
@@ -695,7 +701,7 @@ proto.hiddifyrpc.CoreInfoResponse.deserializeBinaryFromReader = function(msg, re
       msg.setMessageType(value);
       break;
     case 3:
-      var value = /** @type {string} */ (reader.readStringRequireUtf8());
+      var value = /** @type {string} */ (reader.readString());
       msg.setMessage(value);
       break;
     default:
@@ -837,12 +843,12 @@ proto.hiddifyrpc.StartRequest.prototype.toObject = function(opt_includeInstance)
  */
 proto.hiddifyrpc.StartRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
-configPath: jspb.Message.getFieldWithDefault(msg, 1, ""),
-configContent: jspb.Message.getFieldWithDefault(msg, 2, ""),
-disableMemoryLimit: jspb.Message.getBooleanFieldWithDefault(msg, 3, false),
-delayStart: jspb.Message.getBooleanFieldWithDefault(msg, 4, false),
-enableOldCommandServer: jspb.Message.getBooleanFieldWithDefault(msg, 5, false),
-enableRawConfig: jspb.Message.getBooleanFieldWithDefault(msg, 6, false)
+    configPath: jspb.Message.getFieldWithDefault(msg, 1, ""),
+    configContent: jspb.Message.getFieldWithDefault(msg, 2, ""),
+    disableMemoryLimit: jspb.Message.getBooleanFieldWithDefault(msg, 3, false),
+    delayStart: jspb.Message.getBooleanFieldWithDefault(msg, 4, false),
+    enableOldCommandServer: jspb.Message.getBooleanFieldWithDefault(msg, 5, false),
+    enableRawConfig: jspb.Message.getBooleanFieldWithDefault(msg, 6, false)
   };
 
   if (includeInstance) {
@@ -880,11 +886,11 @@ proto.hiddifyrpc.StartRequest.deserializeBinaryFromReader = function(msg, reader
     var field = reader.getFieldNumber();
     switch (field) {
     case 1:
-      var value = /** @type {string} */ (reader.readStringRequireUtf8());
+      var value = /** @type {string} */ (reader.readString());
       msg.setConfigPath(value);
       break;
     case 2:
-      var value = /** @type {string} */ (reader.readStringRequireUtf8());
+      var value = /** @type {string} */ (reader.readString());
       msg.setConfigContent(value);
       break;
     case 3:
@@ -1117,9 +1123,9 @@ proto.hiddifyrpc.SetupRequest.prototype.toObject = function(opt_includeInstance)
  */
 proto.hiddifyrpc.SetupRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
-basePath: jspb.Message.getFieldWithDefault(msg, 1, ""),
-workingPath: jspb.Message.getFieldWithDefault(msg, 2, ""),
-tempPath: jspb.Message.getFieldWithDefault(msg, 3, "")
+    basePath: jspb.Message.getFieldWithDefault(msg, 1, ""),
+    workingPath: jspb.Message.getFieldWithDefault(msg, 2, ""),
+    tempPath: jspb.Message.getFieldWithDefault(msg, 3, "")
   };
 
   if (includeInstance) {
@@ -1157,15 +1163,15 @@ proto.hiddifyrpc.SetupRequest.deserializeBinaryFromReader = function(msg, reader
     var field = reader.getFieldNumber();
     switch (field) {
     case 1:
-      var value = /** @type {string} */ (reader.readStringRequireUtf8());
+      var value = /** @type {string} */ (reader.readString());
       msg.setBasePath(value);
       break;
     case 2:
-      var value = /** @type {string} */ (reader.readStringRequireUtf8());
+      var value = /** @type {string} */ (reader.readString());
       msg.setWorkingPath(value);
       break;
     case 3:
-      var value = /** @type {string} */ (reader.readStringRequireUtf8());
+      var value = /** @type {string} */ (reader.readString());
       msg.setTempPath(value);
       break;
     default:
@@ -1307,8 +1313,8 @@ proto.hiddifyrpc.Response.prototype.toObject = function(opt_includeInstance) {
  */
 proto.hiddifyrpc.Response.toObject = function(includeInstance, msg) {
   var f, obj = {
-responseCode: jspb.Message.getFieldWithDefault(msg, 1, 0),
-message: jspb.Message.getFieldWithDefault(msg, 2, "")
+    responseCode: jspb.Message.getFieldWithDefault(msg, 1, 0),
+    message: jspb.Message.getFieldWithDefault(msg, 2, "")
   };
 
   if (includeInstance) {
@@ -1350,7 +1356,7 @@ proto.hiddifyrpc.Response.deserializeBinaryFromReader = function(msg, reader) {
       msg.setResponseCode(value);
       break;
     case 2:
-      var value = /** @type {string} */ (reader.readStringRequireUtf8());
+      var value = /** @type {string} */ (reader.readString());
       msg.setMessage(value);
       break;
     default:
@@ -1467,15 +1473,15 @@ proto.hiddifyrpc.SystemInfo.prototype.toObject = function(opt_includeInstance) {
  */
 proto.hiddifyrpc.SystemInfo.toObject = function(includeInstance, msg) {
   var f, obj = {
-memory: jspb.Message.getFieldWithDefault(msg, 1, 0),
-goroutines: jspb.Message.getFieldWithDefault(msg, 2, 0),
-connectionsIn: jspb.Message.getFieldWithDefault(msg, 3, 0),
-connectionsOut: jspb.Message.getFieldWithDefault(msg, 4, 0),
-trafficAvailable: jspb.Message.getBooleanFieldWithDefault(msg, 5, false),
-uplink: jspb.Message.getFieldWithDefault(msg, 6, 0),
-downlink: jspb.Message.getFieldWithDefault(msg, 7, 0),
-uplinkTotal: jspb.Message.getFieldWithDefault(msg, 8, 0),
-downlinkTotal: jspb.Message.getFieldWithDefault(msg, 9, 0)
+    memory: jspb.Message.getFieldWithDefault(msg, 1, 0),
+    goroutines: jspb.Message.getFieldWithDefault(msg, 2, 0),
+    connectionsIn: jspb.Message.getFieldWithDefault(msg, 3, 0),
+    connectionsOut: jspb.Message.getFieldWithDefault(msg, 4, 0),
+    trafficAvailable: jspb.Message.getBooleanFieldWithDefault(msg, 5, false),
+    uplink: jspb.Message.getFieldWithDefault(msg, 6, 0),
+    downlink: jspb.Message.getFieldWithDefault(msg, 7, 0),
+    uplinkTotal: jspb.Message.getFieldWithDefault(msg, 8, 0),
+    downlinkTotal: jspb.Message.getFieldWithDefault(msg, 9, 0)
   };
 
   if (includeInstance) {
@@ -1837,10 +1843,10 @@ proto.hiddifyrpc.OutboundGroupItem.prototype.toObject = function(opt_includeInst
  */
 proto.hiddifyrpc.OutboundGroupItem.toObject = function(includeInstance, msg) {
   var f, obj = {
-tag: jspb.Message.getFieldWithDefault(msg, 1, ""),
-type: jspb.Message.getFieldWithDefault(msg, 2, ""),
-urlTestTime: jspb.Message.getFieldWithDefault(msg, 3, 0),
-urlTestDelay: jspb.Message.getFieldWithDefault(msg, 4, 0)
+    tag: jspb.Message.getFieldWithDefault(msg, 1, ""),
+    type: jspb.Message.getFieldWithDefault(msg, 2, ""),
+    urlTestTime: jspb.Message.getFieldWithDefault(msg, 3, 0),
+    urlTestDelay: jspb.Message.getFieldWithDefault(msg, 4, 0)
   };
 
   if (includeInstance) {
@@ -1878,11 +1884,11 @@ proto.hiddifyrpc.OutboundGroupItem.deserializeBinaryFromReader = function(msg, r
     var field = reader.getFieldNumber();
     switch (field) {
     case 1:
-      var value = /** @type {string} */ (reader.readStringRequireUtf8());
+      var value = /** @type {string} */ (reader.readString());
       msg.setTag(value);
       break;
     case 2:
-      var value = /** @type {string} */ (reader.readStringRequireUtf8());
+      var value = /** @type {string} */ (reader.readString());
       msg.setType(value);
       break;
     case 3:
@@ -2064,10 +2070,10 @@ proto.hiddifyrpc.OutboundGroup.prototype.toObject = function(opt_includeInstance
  */
 proto.hiddifyrpc.OutboundGroup.toObject = function(includeInstance, msg) {
   var f, obj = {
-tag: jspb.Message.getFieldWithDefault(msg, 1, ""),
-type: jspb.Message.getFieldWithDefault(msg, 2, ""),
-selected: jspb.Message.getFieldWithDefault(msg, 3, ""),
-itemsList: jspb.Message.toObjectList(msg.getItemsList(),
+    tag: jspb.Message.getFieldWithDefault(msg, 1, ""),
+    type: jspb.Message.getFieldWithDefault(msg, 2, ""),
+    selected: jspb.Message.getFieldWithDefault(msg, 3, ""),
+    itemsList: jspb.Message.toObjectList(msg.getItemsList(),
     proto.hiddifyrpc.OutboundGroupItem.toObject, includeInstance)
   };
 
@@ -2106,15 +2112,15 @@ proto.hiddifyrpc.OutboundGroup.deserializeBinaryFromReader = function(msg, reade
     var field = reader.getFieldNumber();
     switch (field) {
     case 1:
-      var value = /** @type {string} */ (reader.readStringRequireUtf8());
+      var value = /** @type {string} */ (reader.readString());
       msg.setTag(value);
       break;
     case 2:
-      var value = /** @type {string} */ (reader.readStringRequireUtf8());
+      var value = /** @type {string} */ (reader.readString());
       msg.setType(value);
       break;
     case 3:
-      var value = /** @type {string} */ (reader.readStringRequireUtf8());
+      var value = /** @type {string} */ (reader.readString());
       msg.setSelected(value);
       break;
     case 4:
@@ -2314,7 +2320,7 @@ proto.hiddifyrpc.OutboundGroupList.prototype.toObject = function(opt_includeInst
  */
 proto.hiddifyrpc.OutboundGroupList.toObject = function(includeInstance, msg) {
   var f, obj = {
-itemsList: jspb.Message.toObjectList(msg.getItemsList(),
+    itemsList: jspb.Message.toObjectList(msg.getItemsList(),
     proto.hiddifyrpc.OutboundGroup.toObject, includeInstance)
   };
 
@@ -2467,8 +2473,8 @@ proto.hiddifyrpc.WarpAccount.prototype.toObject = function(opt_includeInstance) 
  */
 proto.hiddifyrpc.WarpAccount.toObject = function(includeInstance, msg) {
   var f, obj = {
-accountId: jspb.Message.getFieldWithDefault(msg, 1, ""),
-accessToken: jspb.Message.getFieldWithDefault(msg, 2, "")
+    accountId: jspb.Message.getFieldWithDefault(msg, 1, ""),
+    accessToken: jspb.Message.getFieldWithDefault(msg, 2, "")
   };
 
   if (includeInstance) {
@@ -2506,11 +2512,11 @@ proto.hiddifyrpc.WarpAccount.deserializeBinaryFromReader = function(msg, reader)
     var field = reader.getFieldNumber();
     switch (field) {
     case 1:
-      var value = /** @type {string} */ (reader.readStringRequireUtf8());
+      var value = /** @type {string} */ (reader.readString());
       msg.setAccountId(value);
       break;
     case 2:
-      var value = /** @type {string} */ (reader.readStringRequireUtf8());
+      var value = /** @type {string} */ (reader.readString());
       msg.setAccessToken(value);
       break;
     default:
@@ -2627,11 +2633,11 @@ proto.hiddifyrpc.WarpWireguardConfig.prototype.toObject = function(opt_includeIn
  */
 proto.hiddifyrpc.WarpWireguardConfig.toObject = function(includeInstance, msg) {
   var f, obj = {
-privateKey: jspb.Message.getFieldWithDefault(msg, 1, ""),
-localAddressIpv4: jspb.Message.getFieldWithDefault(msg, 2, ""),
-localAddressIpv6: jspb.Message.getFieldWithDefault(msg, 3, ""),
-peerPublicKey: jspb.Message.getFieldWithDefault(msg, 4, ""),
-clientId: jspb.Message.getFieldWithDefault(msg, 5, "")
+    privateKey: jspb.Message.getFieldWithDefault(msg, 1, ""),
+    localAddressIpv4: jspb.Message.getFieldWithDefault(msg, 2, ""),
+    localAddressIpv6: jspb.Message.getFieldWithDefault(msg, 3, ""),
+    peerPublicKey: jspb.Message.getFieldWithDefault(msg, 4, ""),
+    clientId: jspb.Message.getFieldWithDefault(msg, 5, "")
   };
 
   if (includeInstance) {
@@ -2669,23 +2675,23 @@ proto.hiddifyrpc.WarpWireguardConfig.deserializeBinaryFromReader = function(msg,
     var field = reader.getFieldNumber();
     switch (field) {
     case 1:
-      var value = /** @type {string} */ (reader.readStringRequireUtf8());
+      var value = /** @type {string} */ (reader.readString());
       msg.setPrivateKey(value);
       break;
     case 2:
-      var value = /** @type {string} */ (reader.readStringRequireUtf8());
+      var value = /** @type {string} */ (reader.readString());
       msg.setLocalAddressIpv4(value);
       break;
     case 3:
-      var value = /** @type {string} */ (reader.readStringRequireUtf8());
+      var value = /** @type {string} */ (reader.readString());
       msg.setLocalAddressIpv6(value);
       break;
     case 4:
-      var value = /** @type {string} */ (reader.readStringRequireUtf8());
+      var value = /** @type {string} */ (reader.readString());
       msg.setPeerPublicKey(value);
       break;
     case 5:
-      var value = /** @type {string} */ (reader.readStringRequireUtf8());
+      var value = /** @type {string} */ (reader.readString());
       msg.setClientId(value);
       break;
     default:
@@ -2877,9 +2883,9 @@ proto.hiddifyrpc.WarpGenerationResponse.prototype.toObject = function(opt_includ
  */
 proto.hiddifyrpc.WarpGenerationResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
-account: (f = msg.getAccount()) && proto.hiddifyrpc.WarpAccount.toObject(includeInstance, f),
-log: jspb.Message.getFieldWithDefault(msg, 2, ""),
-config: (f = msg.getConfig()) && proto.hiddifyrpc.WarpWireguardConfig.toObject(includeInstance, f)
+    account: (f = msg.getAccount()) && proto.hiddifyrpc.WarpAccount.toObject(includeInstance, f),
+    log: jspb.Message.getFieldWithDefault(msg, 2, ""),
+    config: (f = msg.getConfig()) && proto.hiddifyrpc.WarpWireguardConfig.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -2922,7 +2928,7 @@ proto.hiddifyrpc.WarpGenerationResponse.deserializeBinaryFromReader = function(m
       msg.setAccount(value);
       break;
     case 2:
-      var value = /** @type {string} */ (reader.readStringRequireUtf8());
+      var value = /** @type {string} */ (reader.readString());
       msg.setLog(value);
       break;
     case 3:
@@ -3109,8 +3115,8 @@ proto.hiddifyrpc.SystemProxyStatus.prototype.toObject = function(opt_includeInst
  */
 proto.hiddifyrpc.SystemProxyStatus.toObject = function(includeInstance, msg) {
   var f, obj = {
-available: jspb.Message.getBooleanFieldWithDefault(msg, 1, false),
-enabled: jspb.Message.getBooleanFieldWithDefault(msg, 2, false)
+    available: jspb.Message.getBooleanFieldWithDefault(msg, 1, false),
+    enabled: jspb.Message.getBooleanFieldWithDefault(msg, 2, false)
   };
 
   if (includeInstance) {
@@ -3269,10 +3275,10 @@ proto.hiddifyrpc.ParseRequest.prototype.toObject = function(opt_includeInstance)
  */
 proto.hiddifyrpc.ParseRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
-content: jspb.Message.getFieldWithDefault(msg, 1, ""),
-configPath: jspb.Message.getFieldWithDefault(msg, 2, ""),
-tempPath: jspb.Message.getFieldWithDefault(msg, 3, ""),
-debug: jspb.Message.getBooleanFieldWithDefault(msg, 4, false)
+    content: jspb.Message.getFieldWithDefault(msg, 1, ""),
+    configPath: jspb.Message.getFieldWithDefault(msg, 2, ""),
+    tempPath: jspb.Message.getFieldWithDefault(msg, 3, ""),
+    debug: jspb.Message.getBooleanFieldWithDefault(msg, 4, false)
   };
 
   if (includeInstance) {
@@ -3310,15 +3316,15 @@ proto.hiddifyrpc.ParseRequest.deserializeBinaryFromReader = function(msg, reader
     var field = reader.getFieldNumber();
     switch (field) {
     case 1:
-      var value = /** @type {string} */ (reader.readStringRequireUtf8());
+      var value = /** @type {string} */ (reader.readString());
       msg.setContent(value);
       break;
     case 2:
-      var value = /** @type {string} */ (reader.readStringRequireUtf8());
+      var value = /** @type {string} */ (reader.readString());
       msg.setConfigPath(value);
       break;
     case 3:
-      var value = /** @type {string} */ (reader.readStringRequireUtf8());
+      var value = /** @type {string} */ (reader.readString());
       msg.setTempPath(value);
       break;
     case 4:
@@ -3489,9 +3495,9 @@ proto.hiddifyrpc.ParseResponse.prototype.toObject = function(opt_includeInstance
  */
 proto.hiddifyrpc.ParseResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
-responseCode: jspb.Message.getFieldWithDefault(msg, 1, 0),
-content: jspb.Message.getFieldWithDefault(msg, 2, ""),
-message: jspb.Message.getFieldWithDefault(msg, 3, "")
+    responseCode: jspb.Message.getFieldWithDefault(msg, 1, 0),
+    content: jspb.Message.getFieldWithDefault(msg, 2, ""),
+    message: jspb.Message.getFieldWithDefault(msg, 3, "")
   };
 
   if (includeInstance) {
@@ -3533,11 +3539,11 @@ proto.hiddifyrpc.ParseResponse.deserializeBinaryFromReader = function(msg, reade
       msg.setResponseCode(value);
       break;
     case 2:
-      var value = /** @type {string} */ (reader.readStringRequireUtf8());
+      var value = /** @type {string} */ (reader.readString());
       msg.setContent(value);
       break;
     case 3:
-      var value = /** @type {string} */ (reader.readStringRequireUtf8());
+      var value = /** @type {string} */ (reader.readString());
       msg.setMessage(value);
       break;
     default:
@@ -3679,7 +3685,7 @@ proto.hiddifyrpc.ChangeHiddifySettingsRequest.prototype.toObject = function(opt_
  */
 proto.hiddifyrpc.ChangeHiddifySettingsRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
-hiddifySettingsJson: jspb.Message.getFieldWithDefault(msg, 1, "")
+    hiddifySettingsJson: jspb.Message.getFieldWithDefault(msg, 1, "")
   };
 
   if (includeInstance) {
@@ -3717,7 +3723,7 @@ proto.hiddifyrpc.ChangeHiddifySettingsRequest.deserializeBinaryFromReader = func
     var field = reader.getFieldNumber();
     switch (field) {
     case 1:
-      var value = /** @type {string} */ (reader.readStringRequireUtf8());
+      var value = /** @type {string} */ (reader.readString());
       msg.setHiddifySettingsJson(value);
       break;
     default:
@@ -3809,7 +3815,7 @@ proto.hiddifyrpc.HiddifySettingsResponse.prototype.toObject = function(opt_inclu
  */
 proto.hiddifyrpc.HiddifySettingsResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
-hiddifySettingsJson: jspb.Message.getFieldWithDefault(msg, 1, "")
+    hiddifySettingsJson: jspb.Message.getFieldWithDefault(msg, 1, "")
   };
 
   if (includeInstance) {
@@ -3847,7 +3853,7 @@ proto.hiddifyrpc.HiddifySettingsResponse.deserializeBinaryFromReader = function(
     var field = reader.getFieldNumber();
     switch (field) {
     case 1:
-      var value = /** @type {string} */ (reader.readStringRequireUtf8());
+      var value = /** @type {string} */ (reader.readString());
       msg.setHiddifySettingsJson(value);
       break;
     default:
@@ -3939,9 +3945,9 @@ proto.hiddifyrpc.GenerateConfigRequest.prototype.toObject = function(opt_include
  */
 proto.hiddifyrpc.GenerateConfigRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
-path: jspb.Message.getFieldWithDefault(msg, 1, ""),
-tempPath: jspb.Message.getFieldWithDefault(msg, 2, ""),
-debug: jspb.Message.getBooleanFieldWithDefault(msg, 3, false)
+    path: jspb.Message.getFieldWithDefault(msg, 1, ""),
+    tempPath: jspb.Message.getFieldWithDefault(msg, 2, ""),
+    debug: jspb.Message.getBooleanFieldWithDefault(msg, 3, false)
   };
 
   if (includeInstance) {
@@ -3979,11 +3985,11 @@ proto.hiddifyrpc.GenerateConfigRequest.deserializeBinaryFromReader = function(ms
     var field = reader.getFieldNumber();
     switch (field) {
     case 1:
-      var value = /** @type {string} */ (reader.readStringRequireUtf8());
+      var value = /** @type {string} */ (reader.readString());
       msg.setPath(value);
       break;
     case 2:
-      var value = /** @type {string} */ (reader.readStringRequireUtf8());
+      var value = /** @type {string} */ (reader.readString());
       msg.setTempPath(value);
       break;
     case 3:
@@ -4129,7 +4135,7 @@ proto.hiddifyrpc.GenerateConfigResponse.prototype.toObject = function(opt_includ
  */
 proto.hiddifyrpc.GenerateConfigResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
-configContent: jspb.Message.getFieldWithDefault(msg, 1, "")
+    configContent: jspb.Message.getFieldWithDefault(msg, 1, "")
   };
 
   if (includeInstance) {
@@ -4167,7 +4173,7 @@ proto.hiddifyrpc.GenerateConfigResponse.deserializeBinaryFromReader = function(m
     var field = reader.getFieldNumber();
     switch (field) {
     case 1:
-      var value = /** @type {string} */ (reader.readStringRequireUtf8());
+      var value = /** @type {string} */ (reader.readString());
       msg.setConfigContent(value);
       break;
     default:
@@ -4259,8 +4265,8 @@ proto.hiddifyrpc.SelectOutboundRequest.prototype.toObject = function(opt_include
  */
 proto.hiddifyrpc.SelectOutboundRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
-groupTag: jspb.Message.getFieldWithDefault(msg, 1, ""),
-outboundTag: jspb.Message.getFieldWithDefault(msg, 2, "")
+    groupTag: jspb.Message.getFieldWithDefault(msg, 1, ""),
+    outboundTag: jspb.Message.getFieldWithDefault(msg, 2, "")
   };
 
   if (includeInstance) {
@@ -4298,11 +4304,11 @@ proto.hiddifyrpc.SelectOutboundRequest.deserializeBinaryFromReader = function(ms
     var field = reader.getFieldNumber();
     switch (field) {
     case 1:
-      var value = /** @type {string} */ (reader.readStringRequireUtf8());
+      var value = /** @type {string} */ (reader.readString());
       msg.setGroupTag(value);
       break;
     case 2:
-      var value = /** @type {string} */ (reader.readStringRequireUtf8());
+      var value = /** @type {string} */ (reader.readString());
       msg.setOutboundTag(value);
       break;
     default:
@@ -4419,7 +4425,7 @@ proto.hiddifyrpc.UrlTestRequest.prototype.toObject = function(opt_includeInstanc
  */
 proto.hiddifyrpc.UrlTestRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
-groupTag: jspb.Message.getFieldWithDefault(msg, 1, "")
+    groupTag: jspb.Message.getFieldWithDefault(msg, 1, "")
   };
 
   if (includeInstance) {
@@ -4457,7 +4463,7 @@ proto.hiddifyrpc.UrlTestRequest.deserializeBinaryFromReader = function(msg, read
     var field = reader.getFieldNumber();
     switch (field) {
     case 1:
-      var value = /** @type {string} */ (reader.readStringRequireUtf8());
+      var value = /** @type {string} */ (reader.readString());
       msg.setGroupTag(value);
       break;
     default:
@@ -4549,9 +4555,9 @@ proto.hiddifyrpc.GenerateWarpConfigRequest.prototype.toObject = function(opt_inc
  */
 proto.hiddifyrpc.GenerateWarpConfigRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
-licenseKey: jspb.Message.getFieldWithDefault(msg, 1, ""),
-accountId: jspb.Message.getFieldWithDefault(msg, 2, ""),
-accessToken: jspb.Message.getFieldWithDefault(msg, 3, "")
+    licenseKey: jspb.Message.getFieldWithDefault(msg, 1, ""),
+    accountId: jspb.Message.getFieldWithDefault(msg, 2, ""),
+    accessToken: jspb.Message.getFieldWithDefault(msg, 3, "")
   };
 
   if (includeInstance) {
@@ -4589,15 +4595,15 @@ proto.hiddifyrpc.GenerateWarpConfigRequest.deserializeBinaryFromReader = functio
     var field = reader.getFieldNumber();
     switch (field) {
     case 1:
-      var value = /** @type {string} */ (reader.readStringRequireUtf8());
+      var value = /** @type {string} */ (reader.readString());
       msg.setLicenseKey(value);
       break;
     case 2:
-      var value = /** @type {string} */ (reader.readStringRequireUtf8());
+      var value = /** @type {string} */ (reader.readString());
       msg.setAccountId(value);
       break;
     case 3:
-      var value = /** @type {string} */ (reader.readStringRequireUtf8());
+      var value = /** @type {string} */ (reader.readString());
       msg.setAccessToken(value);
       break;
     default:
@@ -4739,7 +4745,7 @@ proto.hiddifyrpc.SetSystemProxyEnabledRequest.prototype.toObject = function(opt_
  */
 proto.hiddifyrpc.SetSystemProxyEnabledRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
-isEnabled: jspb.Message.getBooleanFieldWithDefault(msg, 1, false)
+    isEnabled: jspb.Message.getBooleanFieldWithDefault(msg, 1, false)
   };
 
   if (includeInstance) {
@@ -4869,10 +4875,10 @@ proto.hiddifyrpc.ConfigCapabilityResponse.prototype.toObject = function(opt_incl
  */
 proto.hiddifyrpc.ConfigCapabilityResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
-supportsTlsFragment: jspb.Message.getBooleanFieldWithDefault(msg, 1, false),
-supportsQuic: jspb.Message.getBooleanFieldWithDefault(msg, 2, false),
-supportsEch: jspb.Message.getBooleanFieldWithDefault(msg, 3, false),
-schemaVersion: jspb.Message.getFieldWithDefault(msg, 4, "")
+    supportsTlsFragment: jspb.Message.getBooleanFieldWithDefault(msg, 1, false),
+    supportsQuic: jspb.Message.getBooleanFieldWithDefault(msg, 2, false),
+    supportsEch: jspb.Message.getBooleanFieldWithDefault(msg, 3, false),
+    schemaVersion: jspb.Message.getFieldWithDefault(msg, 4, "")
   };
 
   if (includeInstance) {
@@ -4922,7 +4928,7 @@ proto.hiddifyrpc.ConfigCapabilityResponse.deserializeBinaryFromReader = function
       msg.setSupportsEch(value);
       break;
     case 4:
-      var value = /** @type {string} */ (reader.readStringRequireUtf8());
+      var value = /** @type {string} */ (reader.readString());
       msg.setSchemaVersion(value);
       break;
     default:
@@ -5089,9 +5095,9 @@ proto.hiddifyrpc.LogMessage.prototype.toObject = function(opt_includeInstance) {
  */
 proto.hiddifyrpc.LogMessage.toObject = function(includeInstance, msg) {
   var f, obj = {
-level: jspb.Message.getFieldWithDefault(msg, 1, 0),
-type: jspb.Message.getFieldWithDefault(msg, 2, 0),
-message: jspb.Message.getFieldWithDefault(msg, 3, "")
+    level: jspb.Message.getFieldWithDefault(msg, 1, 0),
+    type: jspb.Message.getFieldWithDefault(msg, 2, 0),
+    message: jspb.Message.getFieldWithDefault(msg, 3, "")
   };
 
   if (includeInstance) {
@@ -5137,7 +5143,7 @@ proto.hiddifyrpc.LogMessage.deserializeBinaryFromReader = function(msg, reader) 
       msg.setType(value);
       break;
     case 3:
-      var value = /** @type {string} */ (reader.readStringRequireUtf8());
+      var value = /** @type {string} */ (reader.readString());
       msg.setMessage(value);
       break;
     default:
@@ -5380,11 +5386,11 @@ proto.hiddifyrpc.TunnelStartRequest.prototype.toObject = function(opt_includeIns
  */
 proto.hiddifyrpc.TunnelStartRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
-ipv6: jspb.Message.getBooleanFieldWithDefault(msg, 1, false),
-serverPort: jspb.Message.getFieldWithDefault(msg, 2, 0),
-strictRoute: jspb.Message.getBooleanFieldWithDefault(msg, 3, false),
-endpointIndependentNat: jspb.Message.getBooleanFieldWithDefault(msg, 4, false),
-stack: jspb.Message.getFieldWithDefault(msg, 5, "")
+    ipv6: jspb.Message.getBooleanFieldWithDefault(msg, 1, false),
+    serverPort: jspb.Message.getFieldWithDefault(msg, 2, 0),
+    strictRoute: jspb.Message.getBooleanFieldWithDefault(msg, 3, false),
+    endpointIndependentNat: jspb.Message.getBooleanFieldWithDefault(msg, 4, false),
+    stack: jspb.Message.getFieldWithDefault(msg, 5, "")
   };
 
   if (includeInstance) {
@@ -5438,7 +5444,7 @@ proto.hiddifyrpc.TunnelStartRequest.deserializeBinaryFromReader = function(msg, 
       msg.setEndpointIndependentNat(value);
       break;
     case 5:
-      var value = /** @type {string} */ (reader.readStringRequireUtf8());
+      var value = /** @type {string} */ (reader.readString());
       msg.setStack(value);
       break;
     default:
@@ -5630,7 +5636,7 @@ proto.hiddifyrpc.TunnelResponse.prototype.toObject = function(opt_includeInstanc
  */
 proto.hiddifyrpc.TunnelResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
-message: jspb.Message.getFieldWithDefault(msg, 1, "")
+    message: jspb.Message.getFieldWithDefault(msg, 1, "")
   };
 
   if (includeInstance) {
@@ -5668,7 +5674,7 @@ proto.hiddifyrpc.TunnelResponse.deserializeBinaryFromReader = function(msg, read
     var field = reader.getFieldNumber();
     switch (field) {
     case 1:
-      var value = /** @type {string} */ (reader.readStringRequireUtf8());
+      var value = /** @type {string} */ (reader.readString());
       msg.setMessage(value);
       break;
     default:

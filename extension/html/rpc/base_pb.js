@@ -13,7 +13,13 @@
 
 var jspb = require('google-protobuf');
 var goog = jspb;
-var global = globalThis;
+var global = (function() {
+  if (this) { return this; }
+  if (typeof window !== 'undefined') { return window; }
+  if (typeof global !== 'undefined') { return global; }
+  if (typeof self !== 'undefined') { return self; }
+  return Function('return this')();
+}.call(null));
 
 goog.exportSymbol('proto.hiddifyrpc.Empty', null, global);
 goog.exportSymbol('proto.hiddifyrpc.HelloRequest', null, global);
@@ -114,7 +120,7 @@ proto.hiddifyrpc.HelloRequest.prototype.toObject = function(opt_includeInstance)
  */
 proto.hiddifyrpc.HelloRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
-name: jspb.Message.getFieldWithDefault(msg, 1, "")
+    name: jspb.Message.getFieldWithDefault(msg, 1, "")
   };
 
   if (includeInstance) {
@@ -152,7 +158,7 @@ proto.hiddifyrpc.HelloRequest.deserializeBinaryFromReader = function(msg, reader
     var field = reader.getFieldNumber();
     switch (field) {
     case 1:
-      var value = /** @type {string} */ (reader.readStringRequireUtf8());
+      var value = /** @type {string} */ (reader.readString());
       msg.setName(value);
       break;
     default:
@@ -244,7 +250,7 @@ proto.hiddifyrpc.HelloResponse.prototype.toObject = function(opt_includeInstance
  */
 proto.hiddifyrpc.HelloResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
-message: jspb.Message.getFieldWithDefault(msg, 1, "")
+    message: jspb.Message.getFieldWithDefault(msg, 1, "")
   };
 
   if (includeInstance) {
@@ -282,7 +288,7 @@ proto.hiddifyrpc.HelloResponse.deserializeBinaryFromReader = function(msg, reade
     var field = reader.getFieldNumber();
     switch (field) {
     case 1:
-      var value = /** @type {string} */ (reader.readStringRequireUtf8());
+      var value = /** @type {string} */ (reader.readString());
       msg.setMessage(value);
       break;
     default:

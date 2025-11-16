@@ -13,7 +13,13 @@
 
 var jspb = require('google-protobuf');
 var goog = jspb;
-var global = globalThis;
+var global = (function() {
+  if (this) { return this; }
+  if (typeof window !== 'undefined') { return window; }
+  if (typeof global !== 'undefined') { return global; }
+  if (typeof self !== 'undefined') { return self; }
+  return Function('return this')();
+}.call(null));
 
 var base_pb = require('./base_pb.js');
 goog.object.extend(proto, base_pb);
@@ -204,9 +210,9 @@ proto.hiddifyrpc.ExtensionActionResult.prototype.toObject = function(opt_include
  */
 proto.hiddifyrpc.ExtensionActionResult.toObject = function(includeInstance, msg) {
   var f, obj = {
-extensionId: jspb.Message.getFieldWithDefault(msg, 1, ""),
-code: jspb.Message.getFieldWithDefault(msg, 2, 0),
-message: jspb.Message.getFieldWithDefault(msg, 3, "")
+    extensionId: jspb.Message.getFieldWithDefault(msg, 1, ""),
+    code: jspb.Message.getFieldWithDefault(msg, 2, 0),
+    message: jspb.Message.getFieldWithDefault(msg, 3, "")
   };
 
   if (includeInstance) {
@@ -244,7 +250,7 @@ proto.hiddifyrpc.ExtensionActionResult.deserializeBinaryFromReader = function(ms
     var field = reader.getFieldNumber();
     switch (field) {
     case 1:
-      var value = /** @type {string} */ (reader.readStringRequireUtf8());
+      var value = /** @type {string} */ (reader.readString());
       msg.setExtensionId(value);
       break;
     case 2:
@@ -252,7 +258,7 @@ proto.hiddifyrpc.ExtensionActionResult.deserializeBinaryFromReader = function(ms
       msg.setCode(value);
       break;
     case 3:
-      var value = /** @type {string} */ (reader.readStringRequireUtf8());
+      var value = /** @type {string} */ (reader.readString());
       msg.setMessage(value);
       break;
     default:
@@ -401,7 +407,7 @@ proto.hiddifyrpc.ExtensionList.prototype.toObject = function(opt_includeInstance
  */
 proto.hiddifyrpc.ExtensionList.toObject = function(includeInstance, msg) {
   var f, obj = {
-extensionsList: jspb.Message.toObjectList(msg.getExtensionsList(),
+    extensionsList: jspb.Message.toObjectList(msg.getExtensionsList(),
     proto.hiddifyrpc.Extension.toObject, includeInstance)
   };
 
@@ -554,8 +560,8 @@ proto.hiddifyrpc.EditExtensionRequest.prototype.toObject = function(opt_includeI
  */
 proto.hiddifyrpc.EditExtensionRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
-extensionId: jspb.Message.getFieldWithDefault(msg, 1, ""),
-enable: jspb.Message.getBooleanFieldWithDefault(msg, 2, false)
+    extensionId: jspb.Message.getFieldWithDefault(msg, 1, ""),
+    enable: jspb.Message.getBooleanFieldWithDefault(msg, 2, false)
   };
 
   if (includeInstance) {
@@ -593,7 +599,7 @@ proto.hiddifyrpc.EditExtensionRequest.deserializeBinaryFromReader = function(msg
     var field = reader.getFieldNumber();
     switch (field) {
     case 1:
-      var value = /** @type {string} */ (reader.readStringRequireUtf8());
+      var value = /** @type {string} */ (reader.readString());
       msg.setExtensionId(value);
       break;
     case 2:
@@ -714,10 +720,10 @@ proto.hiddifyrpc.Extension.prototype.toObject = function(opt_includeInstance) {
  */
 proto.hiddifyrpc.Extension.toObject = function(includeInstance, msg) {
   var f, obj = {
-id: jspb.Message.getFieldWithDefault(msg, 1, ""),
-title: jspb.Message.getFieldWithDefault(msg, 2, ""),
-description: jspb.Message.getFieldWithDefault(msg, 3, ""),
-enable: jspb.Message.getBooleanFieldWithDefault(msg, 4, false)
+    id: jspb.Message.getFieldWithDefault(msg, 1, ""),
+    title: jspb.Message.getFieldWithDefault(msg, 2, ""),
+    description: jspb.Message.getFieldWithDefault(msg, 3, ""),
+    enable: jspb.Message.getBooleanFieldWithDefault(msg, 4, false)
   };
 
   if (includeInstance) {
@@ -755,15 +761,15 @@ proto.hiddifyrpc.Extension.deserializeBinaryFromReader = function(msg, reader) {
     var field = reader.getFieldNumber();
     switch (field) {
     case 1:
-      var value = /** @type {string} */ (reader.readStringRequireUtf8());
+      var value = /** @type {string} */ (reader.readString());
       msg.setId(value);
       break;
     case 2:
-      var value = /** @type {string} */ (reader.readStringRequireUtf8());
+      var value = /** @type {string} */ (reader.readString());
       msg.setTitle(value);
       break;
     case 3:
-      var value = /** @type {string} */ (reader.readStringRequireUtf8());
+      var value = /** @type {string} */ (reader.readString());
       msg.setDescription(value);
       break;
     case 4:
@@ -934,8 +940,8 @@ proto.hiddifyrpc.ExtensionRequest.prototype.toObject = function(opt_includeInsta
  */
 proto.hiddifyrpc.ExtensionRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
-extensionId: jspb.Message.getFieldWithDefault(msg, 1, ""),
-dataMap: (f = msg.getDataMap()) ? f.toObject(includeInstance, undefined) : []
+    extensionId: jspb.Message.getFieldWithDefault(msg, 1, ""),
+    dataMap: (f = msg.getDataMap()) ? f.toObject(includeInstance, undefined) : []
   };
 
   if (includeInstance) {
@@ -973,13 +979,13 @@ proto.hiddifyrpc.ExtensionRequest.deserializeBinaryFromReader = function(msg, re
     var field = reader.getFieldNumber();
     switch (field) {
     case 1:
-      var value = /** @type {string} */ (reader.readStringRequireUtf8());
+      var value = /** @type {string} */ (reader.readString());
       msg.setExtensionId(value);
       break;
     case 2:
       var value = msg.getDataMap();
       reader.readMessage(value, function(message, reader) {
-        jspb.Map.deserializeBinary(message, reader, jspb.BinaryReader.prototype.readStringRequireUtf8, jspb.BinaryReader.prototype.readStringRequireUtf8, null, "", "");
+        jspb.Map.deserializeBinary(message, reader, jspb.BinaryReader.prototype.readString, jspb.BinaryReader.prototype.readString, null, "", "");
          });
       break;
     default:
@@ -1020,12 +1026,7 @@ proto.hiddifyrpc.ExtensionRequest.serializeBinaryToWriter = function(message, wr
   }
   f = message.getDataMap(true);
   if (f && f.getLength() > 0) {
-jspb.internal.public_for_gencode.serializeMapToBinary(
-    message.getDataMap(true),
-    2,
-    writer,
-    jspb.BinaryWriter.prototype.writeString,
-    jspb.BinaryWriter.prototype.writeString);
+    f.serializeBinary(2, writer, jspb.BinaryWriter.prototype.writeString, jspb.BinaryWriter.prototype.writeString);
   }
 };
 
@@ -1067,8 +1068,7 @@ proto.hiddifyrpc.ExtensionRequest.prototype.getDataMap = function(opt_noLazyCrea
  */
 proto.hiddifyrpc.ExtensionRequest.prototype.clearDataMap = function() {
   this.getDataMap().clear();
-  return this;
-};
+  return this;};
 
 
 
@@ -1103,9 +1103,9 @@ proto.hiddifyrpc.SendExtensionDataRequest.prototype.toObject = function(opt_incl
  */
 proto.hiddifyrpc.SendExtensionDataRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
-extensionId: jspb.Message.getFieldWithDefault(msg, 1, ""),
-button: jspb.Message.getFieldWithDefault(msg, 2, ""),
-dataMap: (f = msg.getDataMap()) ? f.toObject(includeInstance, undefined) : []
+    extensionId: jspb.Message.getFieldWithDefault(msg, 1, ""),
+    button: jspb.Message.getFieldWithDefault(msg, 2, ""),
+    dataMap: (f = msg.getDataMap()) ? f.toObject(includeInstance, undefined) : []
   };
 
   if (includeInstance) {
@@ -1143,17 +1143,17 @@ proto.hiddifyrpc.SendExtensionDataRequest.deserializeBinaryFromReader = function
     var field = reader.getFieldNumber();
     switch (field) {
     case 1:
-      var value = /** @type {string} */ (reader.readStringRequireUtf8());
+      var value = /** @type {string} */ (reader.readString());
       msg.setExtensionId(value);
       break;
     case 2:
-      var value = /** @type {string} */ (reader.readStringRequireUtf8());
+      var value = /** @type {string} */ (reader.readString());
       msg.setButton(value);
       break;
     case 3:
       var value = msg.getDataMap();
       reader.readMessage(value, function(message, reader) {
-        jspb.Map.deserializeBinary(message, reader, jspb.BinaryReader.prototype.readStringRequireUtf8, jspb.BinaryReader.prototype.readStringRequireUtf8, null, "", "");
+        jspb.Map.deserializeBinary(message, reader, jspb.BinaryReader.prototype.readString, jspb.BinaryReader.prototype.readString, null, "", "");
          });
       break;
     default:
@@ -1201,12 +1201,7 @@ proto.hiddifyrpc.SendExtensionDataRequest.serializeBinaryToWriter = function(mes
   }
   f = message.getDataMap(true);
   if (f && f.getLength() > 0) {
-jspb.internal.public_for_gencode.serializeMapToBinary(
-    message.getDataMap(true),
-    3,
-    writer,
-    jspb.BinaryWriter.prototype.writeString,
-    jspb.BinaryWriter.prototype.writeString);
+    f.serializeBinary(3, writer, jspb.BinaryWriter.prototype.writeString, jspb.BinaryWriter.prototype.writeString);
   }
 };
 
@@ -1266,8 +1261,7 @@ proto.hiddifyrpc.SendExtensionDataRequest.prototype.getDataMap = function(opt_no
  */
 proto.hiddifyrpc.SendExtensionDataRequest.prototype.clearDataMap = function() {
   this.getDataMap().clear();
-  return this;
-};
+  return this;};
 
 
 
@@ -1302,9 +1296,9 @@ proto.hiddifyrpc.ExtensionResponse.prototype.toObject = function(opt_includeInst
  */
 proto.hiddifyrpc.ExtensionResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
-type: jspb.Message.getFieldWithDefault(msg, 1, 0),
-extensionId: jspb.Message.getFieldWithDefault(msg, 2, ""),
-jsonUi: jspb.Message.getFieldWithDefault(msg, 3, "")
+    type: jspb.Message.getFieldWithDefault(msg, 1, 0),
+    extensionId: jspb.Message.getFieldWithDefault(msg, 2, ""),
+    jsonUi: jspb.Message.getFieldWithDefault(msg, 3, "")
   };
 
   if (includeInstance) {
@@ -1346,11 +1340,11 @@ proto.hiddifyrpc.ExtensionResponse.deserializeBinaryFromReader = function(msg, r
       msg.setType(value);
       break;
     case 2:
-      var value = /** @type {string} */ (reader.readStringRequireUtf8());
+      var value = /** @type {string} */ (reader.readString());
       msg.setExtensionId(value);
       break;
     case 3:
-      var value = /** @type {string} */ (reader.readStringRequireUtf8());
+      var value = /** @type {string} */ (reader.readString());
       msg.setJsonUi(value);
       break;
     default:
