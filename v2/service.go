@@ -7,8 +7,8 @@ import (
 	"time"
 
 	"github.com/hiddify/hiddify-core/config"
+	pb "github.com/hiddify/hiddify-core/hiddifyrpc"
 	"github.com/hiddify/hiddify-core/v2/service_manager"
-
 	"github.com/sagernet/sing-box/experimental/libbox"
 	"github.com/sagernet/sing-box/log"
 	"github.com/sagernet/sing-box/option"
@@ -66,6 +66,7 @@ func NewService(options option.Options) (*libbox.BoxService, error) {
 	if err != nil {
 		return nil, E.Cause(err, "encode config")
 	}
+	Log(pb.LogLevel_DEBUG, pb.LogType_SERVICE, "Config content: "+string(content))
 	service, err := libbox.NewService(string(content), newPlatformInterface())
 	if err != nil {
 		return nil, E.Cause(err, "create service")
