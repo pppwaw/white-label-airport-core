@@ -68,7 +68,6 @@ func ParseConfigContent(contentstr string, debug bool, configOpt *HiddifyOptions
 		return patchConfig(newContent, "SingboxParser")
 	}
 
-	fmt.Printf("Ray/V2Ray 解析已停用，尝试使用 Clash 配置\n")
 	fmt.Printf("Convert using clash\n")
 	clashObj := clash.Clash{}
 	if err := yaml.Unmarshal(content, &clashObj); err == nil && clashObj.Proxies != nil {

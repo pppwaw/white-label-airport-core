@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"runtime"
 	"time"
 
 	"github.com/hiddify/hiddify-core/bridge"
@@ -13,9 +14,14 @@ import (
 	pb "github.com/hiddify/hiddify-core/hiddifyrpc"
 	"github.com/sagernet/sing-box/experimental/libbox"
 	"github.com/sagernet/sing-box/log"
+	"github.com/sagernet/sing-box/option"
 )
 
 const configSchemaVersion = "1.12.12"
+const (
+	newServiceTimeout   = 30 * time.Second
+	startServiceTimeout = 30 * time.Second
+)
 
 var (
 	Box                 *libbox.BoxService
@@ -165,7 +171,7 @@ func StartService(in *pb.StartRequest) (*pb.CoreInfoResponse, error) {
 	}
 
 	Log(pb.LogLevel_DEBUG, pb.LogType_CORE, "Starting Service ")
-	instance, err := NewService(parsedContent)
+	instance, err := newServiceWithTimeout(parsedContent)
 	if err != nil {
 		Log(pb.LogLevel_FATAL, pb.LogType_CORE, err.Error())
 		resp := SetCoreStatus(pb.CoreState_STOPPED, pb.MessageType_CREATE_SERVICE, err.Error())
@@ -177,7 +183,7 @@ func StartService(in *pb.StartRequest) (*pb.CoreInfoResponse, error) {
 		<-time.After(250 * time.Millisecond)
 	}
 
-	err = instance.Start()
+	err = startInstanceWithTimeout(instance)
 	if err != nil {
 		Log(pb.LogLevel_FATAL, pb.LogType_CORE, err.Error())
 		resp := SetCoreStatus(pb.CoreState_STOPPED, pb.MessageType_START_SERVICE, err.Error())
@@ -191,6 +197,49 @@ func StartService(in *pb.StartRequest) (*pb.CoreInfoResponse, error) {
 
 	resp := SetCoreStatus(pb.CoreState_STARTED, pb.MessageType_EMPTY, "")
 	return resp, nil
+}
+
+func startInstanceWithTimeout(instance *libbox.BoxService) error {
+	type result struct {
+		err error
+	}
+	resultCh := make(chan result, 1)
+	go func() {
+		err := instance.Start()
+		resultCh <- result{err: err}
+	}()
+
+	select {
+	case res := <-resultCh:
+		return res.err
+	case <-time.After(startServiceTimeout):
+		buf := make([]byte, 1<<20)
+		n := runtime.Stack(buf, true)
+		log.Error("instance.Start timeout; goroutine dump follows\n", string(buf[:n]))
+		return fmt.Errorf("start service timed out after %s", startServiceTimeout)
+	}
+}
+
+func newServiceWithTimeout(options option.Options) (*libbox.BoxService, error) {
+	type result struct {
+		svc *libbox.BoxService
+		err error
+	}
+	resultCh := make(chan result, 1)
+	go func() {
+		svc, err := NewService(options)
+		resultCh <- result{svc: svc, err: err}
+	}()
+
+	select {
+	case res := <-resultCh:
+		return res.svc, res.err
+	case <-time.After(newServiceTimeout):
+		buf := make([]byte, 1<<20)
+		n := runtime.Stack(buf, true)
+		log.Error("NewService timeout; goroutine dump follows\n", string(buf[:n]))
+		return nil, fmt.Errorf("create service timed out after %s", newServiceTimeout)
+	}
 }
 
 func (s *CoreService) Parse(ctx context.Context, in *pb.ParseRequest) (*pb.ParseResponse, error) {
