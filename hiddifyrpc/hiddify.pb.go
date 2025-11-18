@@ -803,194 +803,6 @@ func (x *OutboundGroupList) GetItems() []*OutboundGroup {
 	return nil
 }
 
-type WarpAccount struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	AccountId     string                 `protobuf:"bytes,1,opt,name=account_id,json=accountId,proto3" json:"account_id,omitempty"`
-	AccessToken   string                 `protobuf:"bytes,2,opt,name=access_token,json=accessToken,proto3" json:"access_token,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *WarpAccount) Reset() {
-	*x = WarpAccount{}
-	mi := &file_hiddify_proto_msgTypes[8]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *WarpAccount) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*WarpAccount) ProtoMessage() {}
-
-func (x *WarpAccount) ProtoReflect() protoreflect.Message {
-	mi := &file_hiddify_proto_msgTypes[8]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use WarpAccount.ProtoReflect.Descriptor instead.
-func (*WarpAccount) Descriptor() ([]byte, []int) {
-	return file_hiddify_proto_rawDescGZIP(), []int{8}
-}
-
-func (x *WarpAccount) GetAccountId() string {
-	if x != nil {
-		return x.AccountId
-	}
-	return ""
-}
-
-func (x *WarpAccount) GetAccessToken() string {
-	if x != nil {
-		return x.AccessToken
-	}
-	return ""
-}
-
-type WarpWireguardConfig struct {
-	state            protoimpl.MessageState `protogen:"open.v1"`
-	PrivateKey       string                 `protobuf:"bytes,1,opt,name=private_key,json=privateKey,proto3" json:"private_key,omitempty"`
-	LocalAddressIpv4 string                 `protobuf:"bytes,2,opt,name=local_address_ipv4,json=localAddressIpv4,proto3" json:"local_address_ipv4,omitempty"`
-	LocalAddressIpv6 string                 `protobuf:"bytes,3,opt,name=local_address_ipv6,json=localAddressIpv6,proto3" json:"local_address_ipv6,omitempty"`
-	PeerPublicKey    string                 `protobuf:"bytes,4,opt,name=peer_public_key,json=peerPublicKey,proto3" json:"peer_public_key,omitempty"`
-	ClientId         string                 `protobuf:"bytes,5,opt,name=client_id,json=clientId,proto3" json:"client_id,omitempty"`
-	unknownFields    protoimpl.UnknownFields
-	sizeCache        protoimpl.SizeCache
-}
-
-func (x *WarpWireguardConfig) Reset() {
-	*x = WarpWireguardConfig{}
-	mi := &file_hiddify_proto_msgTypes[9]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *WarpWireguardConfig) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*WarpWireguardConfig) ProtoMessage() {}
-
-func (x *WarpWireguardConfig) ProtoReflect() protoreflect.Message {
-	mi := &file_hiddify_proto_msgTypes[9]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use WarpWireguardConfig.ProtoReflect.Descriptor instead.
-func (*WarpWireguardConfig) Descriptor() ([]byte, []int) {
-	return file_hiddify_proto_rawDescGZIP(), []int{9}
-}
-
-func (x *WarpWireguardConfig) GetPrivateKey() string {
-	if x != nil {
-		return x.PrivateKey
-	}
-	return ""
-}
-
-func (x *WarpWireguardConfig) GetLocalAddressIpv4() string {
-	if x != nil {
-		return x.LocalAddressIpv4
-	}
-	return ""
-}
-
-func (x *WarpWireguardConfig) GetLocalAddressIpv6() string {
-	if x != nil {
-		return x.LocalAddressIpv6
-	}
-	return ""
-}
-
-func (x *WarpWireguardConfig) GetPeerPublicKey() string {
-	if x != nil {
-		return x.PeerPublicKey
-	}
-	return ""
-}
-
-func (x *WarpWireguardConfig) GetClientId() string {
-	if x != nil {
-		return x.ClientId
-	}
-	return ""
-}
-
-type WarpGenerationResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Account       *WarpAccount           `protobuf:"bytes,1,opt,name=account,proto3" json:"account,omitempty"`
-	Log           string                 `protobuf:"bytes,2,opt,name=log,proto3" json:"log,omitempty"`
-	Config        *WarpWireguardConfig   `protobuf:"bytes,3,opt,name=config,proto3" json:"config,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *WarpGenerationResponse) Reset() {
-	*x = WarpGenerationResponse{}
-	mi := &file_hiddify_proto_msgTypes[10]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *WarpGenerationResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*WarpGenerationResponse) ProtoMessage() {}
-
-func (x *WarpGenerationResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_hiddify_proto_msgTypes[10]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use WarpGenerationResponse.ProtoReflect.Descriptor instead.
-func (*WarpGenerationResponse) Descriptor() ([]byte, []int) {
-	return file_hiddify_proto_rawDescGZIP(), []int{10}
-}
-
-func (x *WarpGenerationResponse) GetAccount() *WarpAccount {
-	if x != nil {
-		return x.Account
-	}
-	return nil
-}
-
-func (x *WarpGenerationResponse) GetLog() string {
-	if x != nil {
-		return x.Log
-	}
-	return ""
-}
-
-func (x *WarpGenerationResponse) GetConfig() *WarpWireguardConfig {
-	if x != nil {
-		return x.Config
-	}
-	return nil
-}
-
 type SystemProxyStatus struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Available     bool                   `protobuf:"varint,1,opt,name=available,proto3" json:"available,omitempty"`
@@ -1001,7 +813,7 @@ type SystemProxyStatus struct {
 
 func (x *SystemProxyStatus) Reset() {
 	*x = SystemProxyStatus{}
-	mi := &file_hiddify_proto_msgTypes[11]
+	mi := &file_hiddify_proto_msgTypes[8]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1013,7 +825,7 @@ func (x *SystemProxyStatus) String() string {
 func (*SystemProxyStatus) ProtoMessage() {}
 
 func (x *SystemProxyStatus) ProtoReflect() protoreflect.Message {
-	mi := &file_hiddify_proto_msgTypes[11]
+	mi := &file_hiddify_proto_msgTypes[8]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1026,7 +838,7 @@ func (x *SystemProxyStatus) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SystemProxyStatus.ProtoReflect.Descriptor instead.
 func (*SystemProxyStatus) Descriptor() ([]byte, []int) {
-	return file_hiddify_proto_rawDescGZIP(), []int{11}
+	return file_hiddify_proto_rawDescGZIP(), []int{8}
 }
 
 func (x *SystemProxyStatus) GetAvailable() bool {
@@ -1055,7 +867,7 @@ type ParseRequest struct {
 
 func (x *ParseRequest) Reset() {
 	*x = ParseRequest{}
-	mi := &file_hiddify_proto_msgTypes[12]
+	mi := &file_hiddify_proto_msgTypes[9]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1067,7 +879,7 @@ func (x *ParseRequest) String() string {
 func (*ParseRequest) ProtoMessage() {}
 
 func (x *ParseRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_hiddify_proto_msgTypes[12]
+	mi := &file_hiddify_proto_msgTypes[9]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1080,7 +892,7 @@ func (x *ParseRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ParseRequest.ProtoReflect.Descriptor instead.
 func (*ParseRequest) Descriptor() ([]byte, []int) {
-	return file_hiddify_proto_rawDescGZIP(), []int{12}
+	return file_hiddify_proto_rawDescGZIP(), []int{9}
 }
 
 func (x *ParseRequest) GetContent() string {
@@ -1122,7 +934,7 @@ type ParseResponse struct {
 
 func (x *ParseResponse) Reset() {
 	*x = ParseResponse{}
-	mi := &file_hiddify_proto_msgTypes[13]
+	mi := &file_hiddify_proto_msgTypes[10]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1134,7 +946,7 @@ func (x *ParseResponse) String() string {
 func (*ParseResponse) ProtoMessage() {}
 
 func (x *ParseResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_hiddify_proto_msgTypes[13]
+	mi := &file_hiddify_proto_msgTypes[10]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1147,7 +959,7 @@ func (x *ParseResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ParseResponse.ProtoReflect.Descriptor instead.
 func (*ParseResponse) Descriptor() ([]byte, []int) {
-	return file_hiddify_proto_rawDescGZIP(), []int{13}
+	return file_hiddify_proto_rawDescGZIP(), []int{10}
 }
 
 func (x *ParseResponse) GetResponseCode() ResponseCode {
@@ -1180,7 +992,7 @@ type ChangeHiddifySettingsRequest struct {
 
 func (x *ChangeHiddifySettingsRequest) Reset() {
 	*x = ChangeHiddifySettingsRequest{}
-	mi := &file_hiddify_proto_msgTypes[14]
+	mi := &file_hiddify_proto_msgTypes[11]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1192,7 +1004,7 @@ func (x *ChangeHiddifySettingsRequest) String() string {
 func (*ChangeHiddifySettingsRequest) ProtoMessage() {}
 
 func (x *ChangeHiddifySettingsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_hiddify_proto_msgTypes[14]
+	mi := &file_hiddify_proto_msgTypes[11]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1205,7 +1017,7 @@ func (x *ChangeHiddifySettingsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ChangeHiddifySettingsRequest.ProtoReflect.Descriptor instead.
 func (*ChangeHiddifySettingsRequest) Descriptor() ([]byte, []int) {
-	return file_hiddify_proto_rawDescGZIP(), []int{14}
+	return file_hiddify_proto_rawDescGZIP(), []int{11}
 }
 
 func (x *ChangeHiddifySettingsRequest) GetHiddifySettingsJson() string {
@@ -1224,7 +1036,7 @@ type HiddifySettingsResponse struct {
 
 func (x *HiddifySettingsResponse) Reset() {
 	*x = HiddifySettingsResponse{}
-	mi := &file_hiddify_proto_msgTypes[15]
+	mi := &file_hiddify_proto_msgTypes[12]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1236,7 +1048,7 @@ func (x *HiddifySettingsResponse) String() string {
 func (*HiddifySettingsResponse) ProtoMessage() {}
 
 func (x *HiddifySettingsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_hiddify_proto_msgTypes[15]
+	mi := &file_hiddify_proto_msgTypes[12]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1249,7 +1061,7 @@ func (x *HiddifySettingsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use HiddifySettingsResponse.ProtoReflect.Descriptor instead.
 func (*HiddifySettingsResponse) Descriptor() ([]byte, []int) {
-	return file_hiddify_proto_rawDescGZIP(), []int{15}
+	return file_hiddify_proto_rawDescGZIP(), []int{12}
 }
 
 func (x *HiddifySettingsResponse) GetHiddifySettingsJson() string {
@@ -1270,7 +1082,7 @@ type GenerateConfigRequest struct {
 
 func (x *GenerateConfigRequest) Reset() {
 	*x = GenerateConfigRequest{}
-	mi := &file_hiddify_proto_msgTypes[16]
+	mi := &file_hiddify_proto_msgTypes[13]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1282,7 +1094,7 @@ func (x *GenerateConfigRequest) String() string {
 func (*GenerateConfigRequest) ProtoMessage() {}
 
 func (x *GenerateConfigRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_hiddify_proto_msgTypes[16]
+	mi := &file_hiddify_proto_msgTypes[13]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1295,7 +1107,7 @@ func (x *GenerateConfigRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GenerateConfigRequest.ProtoReflect.Descriptor instead.
 func (*GenerateConfigRequest) Descriptor() ([]byte, []int) {
-	return file_hiddify_proto_rawDescGZIP(), []int{16}
+	return file_hiddify_proto_rawDescGZIP(), []int{13}
 }
 
 func (x *GenerateConfigRequest) GetPath() string {
@@ -1328,7 +1140,7 @@ type GenerateConfigResponse struct {
 
 func (x *GenerateConfigResponse) Reset() {
 	*x = GenerateConfigResponse{}
-	mi := &file_hiddify_proto_msgTypes[17]
+	mi := &file_hiddify_proto_msgTypes[14]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1340,7 +1152,7 @@ func (x *GenerateConfigResponse) String() string {
 func (*GenerateConfigResponse) ProtoMessage() {}
 
 func (x *GenerateConfigResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_hiddify_proto_msgTypes[17]
+	mi := &file_hiddify_proto_msgTypes[14]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1353,7 +1165,7 @@ func (x *GenerateConfigResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GenerateConfigResponse.ProtoReflect.Descriptor instead.
 func (*GenerateConfigResponse) Descriptor() ([]byte, []int) {
-	return file_hiddify_proto_rawDescGZIP(), []int{17}
+	return file_hiddify_proto_rawDescGZIP(), []int{14}
 }
 
 func (x *GenerateConfigResponse) GetConfigContent() string {
@@ -1373,7 +1185,7 @@ type SelectOutboundRequest struct {
 
 func (x *SelectOutboundRequest) Reset() {
 	*x = SelectOutboundRequest{}
-	mi := &file_hiddify_proto_msgTypes[18]
+	mi := &file_hiddify_proto_msgTypes[15]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1385,7 +1197,7 @@ func (x *SelectOutboundRequest) String() string {
 func (*SelectOutboundRequest) ProtoMessage() {}
 
 func (x *SelectOutboundRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_hiddify_proto_msgTypes[18]
+	mi := &file_hiddify_proto_msgTypes[15]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1398,7 +1210,7 @@ func (x *SelectOutboundRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SelectOutboundRequest.ProtoReflect.Descriptor instead.
 func (*SelectOutboundRequest) Descriptor() ([]byte, []int) {
-	return file_hiddify_proto_rawDescGZIP(), []int{18}
+	return file_hiddify_proto_rawDescGZIP(), []int{15}
 }
 
 func (x *SelectOutboundRequest) GetGroupTag() string {
@@ -1424,7 +1236,7 @@ type UrlTestRequest struct {
 
 func (x *UrlTestRequest) Reset() {
 	*x = UrlTestRequest{}
-	mi := &file_hiddify_proto_msgTypes[19]
+	mi := &file_hiddify_proto_msgTypes[16]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1436,7 +1248,7 @@ func (x *UrlTestRequest) String() string {
 func (*UrlTestRequest) ProtoMessage() {}
 
 func (x *UrlTestRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_hiddify_proto_msgTypes[19]
+	mi := &file_hiddify_proto_msgTypes[16]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1449,72 +1261,12 @@ func (x *UrlTestRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UrlTestRequest.ProtoReflect.Descriptor instead.
 func (*UrlTestRequest) Descriptor() ([]byte, []int) {
-	return file_hiddify_proto_rawDescGZIP(), []int{19}
+	return file_hiddify_proto_rawDescGZIP(), []int{16}
 }
 
 func (x *UrlTestRequest) GetGroupTag() string {
 	if x != nil {
 		return x.GroupTag
-	}
-	return ""
-}
-
-type GenerateWarpConfigRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	LicenseKey    string                 `protobuf:"bytes,1,opt,name=license_key,json=licenseKey,proto3" json:"license_key,omitempty"`
-	AccountId     string                 `protobuf:"bytes,2,opt,name=account_id,json=accountId,proto3" json:"account_id,omitempty"`
-	AccessToken   string                 `protobuf:"bytes,3,opt,name=access_token,json=accessToken,proto3" json:"access_token,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *GenerateWarpConfigRequest) Reset() {
-	*x = GenerateWarpConfigRequest{}
-	mi := &file_hiddify_proto_msgTypes[20]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *GenerateWarpConfigRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*GenerateWarpConfigRequest) ProtoMessage() {}
-
-func (x *GenerateWarpConfigRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_hiddify_proto_msgTypes[20]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use GenerateWarpConfigRequest.ProtoReflect.Descriptor instead.
-func (*GenerateWarpConfigRequest) Descriptor() ([]byte, []int) {
-	return file_hiddify_proto_rawDescGZIP(), []int{20}
-}
-
-func (x *GenerateWarpConfigRequest) GetLicenseKey() string {
-	if x != nil {
-		return x.LicenseKey
-	}
-	return ""
-}
-
-func (x *GenerateWarpConfigRequest) GetAccountId() string {
-	if x != nil {
-		return x.AccountId
-	}
-	return ""
-}
-
-func (x *GenerateWarpConfigRequest) GetAccessToken() string {
-	if x != nil {
-		return x.AccessToken
 	}
 	return ""
 }
@@ -1528,7 +1280,7 @@ type SetSystemProxyEnabledRequest struct {
 
 func (x *SetSystemProxyEnabledRequest) Reset() {
 	*x = SetSystemProxyEnabledRequest{}
-	mi := &file_hiddify_proto_msgTypes[21]
+	mi := &file_hiddify_proto_msgTypes[17]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1540,7 +1292,7 @@ func (x *SetSystemProxyEnabledRequest) String() string {
 func (*SetSystemProxyEnabledRequest) ProtoMessage() {}
 
 func (x *SetSystemProxyEnabledRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_hiddify_proto_msgTypes[21]
+	mi := &file_hiddify_proto_msgTypes[17]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1553,7 +1305,7 @@ func (x *SetSystemProxyEnabledRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SetSystemProxyEnabledRequest.ProtoReflect.Descriptor instead.
 func (*SetSystemProxyEnabledRequest) Descriptor() ([]byte, []int) {
-	return file_hiddify_proto_rawDescGZIP(), []int{21}
+	return file_hiddify_proto_rawDescGZIP(), []int{17}
 }
 
 func (x *SetSystemProxyEnabledRequest) GetIsEnabled() bool {
@@ -1575,7 +1327,7 @@ type ConfigCapabilityResponse struct {
 
 func (x *ConfigCapabilityResponse) Reset() {
 	*x = ConfigCapabilityResponse{}
-	mi := &file_hiddify_proto_msgTypes[22]
+	mi := &file_hiddify_proto_msgTypes[18]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1587,7 +1339,7 @@ func (x *ConfigCapabilityResponse) String() string {
 func (*ConfigCapabilityResponse) ProtoMessage() {}
 
 func (x *ConfigCapabilityResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_hiddify_proto_msgTypes[22]
+	mi := &file_hiddify_proto_msgTypes[18]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1600,7 +1352,7 @@ func (x *ConfigCapabilityResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ConfigCapabilityResponse.ProtoReflect.Descriptor instead.
 func (*ConfigCapabilityResponse) Descriptor() ([]byte, []int) {
-	return file_hiddify_proto_rawDescGZIP(), []int{22}
+	return file_hiddify_proto_rawDescGZIP(), []int{18}
 }
 
 func (x *ConfigCapabilityResponse) GetSupportsTlsFragment() bool {
@@ -1642,7 +1394,7 @@ type LogMessage struct {
 
 func (x *LogMessage) Reset() {
 	*x = LogMessage{}
-	mi := &file_hiddify_proto_msgTypes[23]
+	mi := &file_hiddify_proto_msgTypes[19]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1654,7 +1406,7 @@ func (x *LogMessage) String() string {
 func (*LogMessage) ProtoMessage() {}
 
 func (x *LogMessage) ProtoReflect() protoreflect.Message {
-	mi := &file_hiddify_proto_msgTypes[23]
+	mi := &file_hiddify_proto_msgTypes[19]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1667,7 +1419,7 @@ func (x *LogMessage) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use LogMessage.ProtoReflect.Descriptor instead.
 func (*LogMessage) Descriptor() ([]byte, []int) {
-	return file_hiddify_proto_rawDescGZIP(), []int{23}
+	return file_hiddify_proto_rawDescGZIP(), []int{19}
 }
 
 func (x *LogMessage) GetLevel() LogLevel {
@@ -1699,7 +1451,7 @@ type StopRequest struct {
 
 func (x *StopRequest) Reset() {
 	*x = StopRequest{}
-	mi := &file_hiddify_proto_msgTypes[24]
+	mi := &file_hiddify_proto_msgTypes[20]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1711,7 +1463,7 @@ func (x *StopRequest) String() string {
 func (*StopRequest) ProtoMessage() {}
 
 func (x *StopRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_hiddify_proto_msgTypes[24]
+	mi := &file_hiddify_proto_msgTypes[20]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1724,7 +1476,7 @@ func (x *StopRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use StopRequest.ProtoReflect.Descriptor instead.
 func (*StopRequest) Descriptor() ([]byte, []int) {
-	return file_hiddify_proto_rawDescGZIP(), []int{24}
+	return file_hiddify_proto_rawDescGZIP(), []int{20}
 }
 
 type TunnelStartRequest struct {
@@ -1740,7 +1492,7 @@ type TunnelStartRequest struct {
 
 func (x *TunnelStartRequest) Reset() {
 	*x = TunnelStartRequest{}
-	mi := &file_hiddify_proto_msgTypes[25]
+	mi := &file_hiddify_proto_msgTypes[21]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1752,7 +1504,7 @@ func (x *TunnelStartRequest) String() string {
 func (*TunnelStartRequest) ProtoMessage() {}
 
 func (x *TunnelStartRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_hiddify_proto_msgTypes[25]
+	mi := &file_hiddify_proto_msgTypes[21]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1765,7 +1517,7 @@ func (x *TunnelStartRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use TunnelStartRequest.ProtoReflect.Descriptor instead.
 func (*TunnelStartRequest) Descriptor() ([]byte, []int) {
-	return file_hiddify_proto_rawDescGZIP(), []int{25}
+	return file_hiddify_proto_rawDescGZIP(), []int{21}
 }
 
 func (x *TunnelStartRequest) GetIpv6() bool {
@@ -1812,7 +1564,7 @@ type TunnelResponse struct {
 
 func (x *TunnelResponse) Reset() {
 	*x = TunnelResponse{}
-	mi := &file_hiddify_proto_msgTypes[26]
+	mi := &file_hiddify_proto_msgTypes[22]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1824,7 +1576,7 @@ func (x *TunnelResponse) String() string {
 func (*TunnelResponse) ProtoMessage() {}
 
 func (x *TunnelResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_hiddify_proto_msgTypes[26]
+	mi := &file_hiddify_proto_msgTypes[22]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1837,7 +1589,7 @@ func (x *TunnelResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use TunnelResponse.ProtoReflect.Descriptor instead.
 func (*TunnelResponse) Descriptor() ([]byte, []int) {
-	return file_hiddify_proto_rawDescGZIP(), []int{26}
+	return file_hiddify_proto_rawDescGZIP(), []int{22}
 }
 
 func (x *TunnelResponse) GetMessage() string {
@@ -1899,22 +1651,7 @@ const file_hiddify_proto_rawDesc = "" +
 	"\bselected\x18\x03 \x01(\tR\bselected\x123\n" +
 	"\x05items\x18\x04 \x03(\v2\x1d.hiddifyrpc.OutboundGroupItemR\x05items\"D\n" +
 	"\x11OutboundGroupList\x12/\n" +
-	"\x05items\x18\x01 \x03(\v2\x19.hiddifyrpc.OutboundGroupR\x05items\"O\n" +
-	"\vWarpAccount\x12\x1d\n" +
-	"\n" +
-	"account_id\x18\x01 \x01(\tR\taccountId\x12!\n" +
-	"\faccess_token\x18\x02 \x01(\tR\vaccessToken\"\xd7\x01\n" +
-	"\x13WarpWireguardConfig\x12\x1f\n" +
-	"\vprivate_key\x18\x01 \x01(\tR\n" +
-	"privateKey\x12,\n" +
-	"\x12local_address_ipv4\x18\x02 \x01(\tR\x10localAddressIpv4\x12,\n" +
-	"\x12local_address_ipv6\x18\x03 \x01(\tR\x10localAddressIpv6\x12&\n" +
-	"\x0fpeer_public_key\x18\x04 \x01(\tR\rpeerPublicKey\x12\x1b\n" +
-	"\tclient_id\x18\x05 \x01(\tR\bclientId\"\x96\x01\n" +
-	"\x16WarpGenerationResponse\x121\n" +
-	"\aaccount\x18\x01 \x01(\v2\x17.hiddifyrpc.WarpAccountR\aaccount\x12\x10\n" +
-	"\x03log\x18\x02 \x01(\tR\x03log\x127\n" +
-	"\x06config\x18\x03 \x01(\v2\x1f.hiddifyrpc.WarpWireguardConfigR\x06config\"K\n" +
+	"\x05items\x18\x01 \x03(\v2\x19.hiddifyrpc.OutboundGroupR\x05items\"K\n" +
 	"\x11SystemProxyStatus\x12\x1c\n" +
 	"\tavailable\x18\x01 \x01(\bR\tavailable\x12\x18\n" +
 	"\aenabled\x18\x02 \x01(\bR\aenabled\"|\n" +
@@ -1942,13 +1679,7 @@ const file_hiddify_proto_rawDesc = "" +
 	"\tgroup_tag\x18\x01 \x01(\tR\bgroupTag\x12!\n" +
 	"\foutbound_tag\x18\x02 \x01(\tR\voutboundTag\"-\n" +
 	"\x0eUrlTestRequest\x12\x1b\n" +
-	"\tgroup_tag\x18\x01 \x01(\tR\bgroupTag\"~\n" +
-	"\x19GenerateWarpConfigRequest\x12\x1f\n" +
-	"\vlicense_key\x18\x01 \x01(\tR\n" +
-	"licenseKey\x12\x1d\n" +
-	"\n" +
-	"account_id\x18\x02 \x01(\tR\taccountId\x12!\n" +
-	"\faccess_token\x18\x03 \x01(\tR\vaccessToken\"=\n" +
+	"\tgroup_tag\x18\x01 \x01(\tR\bgroupTag\"=\n" +
 	"\x1cSetSystemProxyEnabledRequest\x12\x1d\n" +
 	"\n" +
 	"is_enabled\x18\x01 \x01(\bR\tisEnabled\"\xbd\x01\n" +
@@ -2006,8 +1737,7 @@ const file_hiddify_proto_rawDesc = "" +
 	"\x06CONFIG\x10\x022\x93\x01\n" +
 	"\x05Hello\x12?\n" +
 	"\bSayHello\x12\x18.hiddifyrpc.HelloRequest\x1a\x19.hiddifyrpc.HelloResponse\x12I\n" +
-	"\x0eSayHelloStream\x12\x18.hiddifyrpc.HelloRequest\x1a\x19.hiddifyrpc.HelloResponse(\x010\x012\xde\n" +
-	"\n" +
+	"\x0eSayHelloStream\x12\x18.hiddifyrpc.HelloRequest\x1a\x19.hiddifyrpc.HelloResponse(\x010\x012\xfd\t\n" +
 	"\x04Core\x12?\n" +
 	"\x05Start\x12\x18.hiddifyrpc.StartRequest\x1a\x1c.hiddifyrpc.CoreInfoResponse\x12E\n" +
 	"\x10CoreInfoListener\x12\x11.hiddifyrpc.Empty\x1a\x1c.hiddifyrpc.CoreInfoResponse0\x01\x12C\n" +
@@ -2022,8 +1752,7 @@ const file_hiddify_proto_rawDesc = "" +
 	"\x04Stop\x12\x11.hiddifyrpc.Empty\x1a\x1c.hiddifyrpc.CoreInfoResponse\x12A\n" +
 	"\aRestart\x12\x18.hiddifyrpc.StartRequest\x1a\x1c.hiddifyrpc.CoreInfoResponse\x12I\n" +
 	"\x0eSelectOutbound\x12!.hiddifyrpc.SelectOutboundRequest\x1a\x14.hiddifyrpc.Response\x12;\n" +
-	"\aUrlTest\x12\x1a.hiddifyrpc.UrlTestRequest\x1a\x14.hiddifyrpc.Response\x12_\n" +
-	"\x12GenerateWarpConfig\x12%.hiddifyrpc.GenerateWarpConfigRequest\x1a\".hiddifyrpc.WarpGenerationResponse\x12H\n" +
+	"\aUrlTest\x12\x1a.hiddifyrpc.UrlTestRequest\x1a\x14.hiddifyrpc.Response\x12H\n" +
 	"\x14GetSystemProxyStatus\x12\x11.hiddifyrpc.Empty\x1a\x1d.hiddifyrpc.SystemProxyStatus\x12W\n" +
 	"\x15SetSystemProxyEnabled\x12(.hiddifyrpc.SetSystemProxyEnabledRequest\x1a\x14.hiddifyrpc.Response\x12P\n" +
 	"\x15GetConfigCapabilities\x12\x11.hiddifyrpc.Empty\x1a$.hiddifyrpc.ConfigCapabilityResponse\x12:\n" +
@@ -2047,7 +1776,7 @@ func file_hiddify_proto_rawDescGZIP() []byte {
 }
 
 var file_hiddify_proto_enumTypes = make([]protoimpl.EnumInfo, 4)
-var file_hiddify_proto_msgTypes = make([]protoimpl.MessageInfo, 27)
+var file_hiddify_proto_msgTypes = make([]protoimpl.MessageInfo, 23)
 var file_hiddify_proto_goTypes = []any{
 	(CoreState)(0),                       // 0: hiddifyrpc.CoreState
 	(MessageType)(0),                     // 1: hiddifyrpc.MessageType
@@ -2061,96 +1790,88 @@ var file_hiddify_proto_goTypes = []any{
 	(*OutboundGroupItem)(nil),            // 9: hiddifyrpc.OutboundGroupItem
 	(*OutboundGroup)(nil),                // 10: hiddifyrpc.OutboundGroup
 	(*OutboundGroupList)(nil),            // 11: hiddifyrpc.OutboundGroupList
-	(*WarpAccount)(nil),                  // 12: hiddifyrpc.WarpAccount
-	(*WarpWireguardConfig)(nil),          // 13: hiddifyrpc.WarpWireguardConfig
-	(*WarpGenerationResponse)(nil),       // 14: hiddifyrpc.WarpGenerationResponse
-	(*SystemProxyStatus)(nil),            // 15: hiddifyrpc.SystemProxyStatus
-	(*ParseRequest)(nil),                 // 16: hiddifyrpc.ParseRequest
-	(*ParseResponse)(nil),                // 17: hiddifyrpc.ParseResponse
-	(*ChangeHiddifySettingsRequest)(nil), // 18: hiddifyrpc.ChangeHiddifySettingsRequest
-	(*HiddifySettingsResponse)(nil),      // 19: hiddifyrpc.HiddifySettingsResponse
-	(*GenerateConfigRequest)(nil),        // 20: hiddifyrpc.GenerateConfigRequest
-	(*GenerateConfigResponse)(nil),       // 21: hiddifyrpc.GenerateConfigResponse
-	(*SelectOutboundRequest)(nil),        // 22: hiddifyrpc.SelectOutboundRequest
-	(*UrlTestRequest)(nil),               // 23: hiddifyrpc.UrlTestRequest
-	(*GenerateWarpConfigRequest)(nil),    // 24: hiddifyrpc.GenerateWarpConfigRequest
-	(*SetSystemProxyEnabledRequest)(nil), // 25: hiddifyrpc.SetSystemProxyEnabledRequest
-	(*ConfigCapabilityResponse)(nil),     // 26: hiddifyrpc.ConfigCapabilityResponse
-	(*LogMessage)(nil),                   // 27: hiddifyrpc.LogMessage
-	(*StopRequest)(nil),                  // 28: hiddifyrpc.StopRequest
-	(*TunnelStartRequest)(nil),           // 29: hiddifyrpc.TunnelStartRequest
-	(*TunnelResponse)(nil),               // 30: hiddifyrpc.TunnelResponse
-	(ResponseCode)(0),                    // 31: hiddifyrpc.ResponseCode
-	(*HelloRequest)(nil),                 // 32: hiddifyrpc.HelloRequest
-	(*Empty)(nil),                        // 33: hiddifyrpc.Empty
-	(*HelloResponse)(nil),                // 34: hiddifyrpc.HelloResponse
+	(*SystemProxyStatus)(nil),            // 12: hiddifyrpc.SystemProxyStatus
+	(*ParseRequest)(nil),                 // 13: hiddifyrpc.ParseRequest
+	(*ParseResponse)(nil),                // 14: hiddifyrpc.ParseResponse
+	(*ChangeHiddifySettingsRequest)(nil), // 15: hiddifyrpc.ChangeHiddifySettingsRequest
+	(*HiddifySettingsResponse)(nil),      // 16: hiddifyrpc.HiddifySettingsResponse
+	(*GenerateConfigRequest)(nil),        // 17: hiddifyrpc.GenerateConfigRequest
+	(*GenerateConfigResponse)(nil),       // 18: hiddifyrpc.GenerateConfigResponse
+	(*SelectOutboundRequest)(nil),        // 19: hiddifyrpc.SelectOutboundRequest
+	(*UrlTestRequest)(nil),               // 20: hiddifyrpc.UrlTestRequest
+	(*SetSystemProxyEnabledRequest)(nil), // 21: hiddifyrpc.SetSystemProxyEnabledRequest
+	(*ConfigCapabilityResponse)(nil),     // 22: hiddifyrpc.ConfigCapabilityResponse
+	(*LogMessage)(nil),                   // 23: hiddifyrpc.LogMessage
+	(*StopRequest)(nil),                  // 24: hiddifyrpc.StopRequest
+	(*TunnelStartRequest)(nil),           // 25: hiddifyrpc.TunnelStartRequest
+	(*TunnelResponse)(nil),               // 26: hiddifyrpc.TunnelResponse
+	(ResponseCode)(0),                    // 27: hiddifyrpc.ResponseCode
+	(*HelloRequest)(nil),                 // 28: hiddifyrpc.HelloRequest
+	(*Empty)(nil),                        // 29: hiddifyrpc.Empty
+	(*HelloResponse)(nil),                // 30: hiddifyrpc.HelloResponse
 }
 var file_hiddify_proto_depIdxs = []int32{
 	0,  // 0: hiddifyrpc.CoreInfoResponse.core_state:type_name -> hiddifyrpc.CoreState
 	1,  // 1: hiddifyrpc.CoreInfoResponse.message_type:type_name -> hiddifyrpc.MessageType
-	31, // 2: hiddifyrpc.Response.response_code:type_name -> hiddifyrpc.ResponseCode
+	27, // 2: hiddifyrpc.Response.response_code:type_name -> hiddifyrpc.ResponseCode
 	9,  // 3: hiddifyrpc.OutboundGroup.items:type_name -> hiddifyrpc.OutboundGroupItem
 	10, // 4: hiddifyrpc.OutboundGroupList.items:type_name -> hiddifyrpc.OutboundGroup
-	12, // 5: hiddifyrpc.WarpGenerationResponse.account:type_name -> hiddifyrpc.WarpAccount
-	13, // 6: hiddifyrpc.WarpGenerationResponse.config:type_name -> hiddifyrpc.WarpWireguardConfig
-	31, // 7: hiddifyrpc.ParseResponse.response_code:type_name -> hiddifyrpc.ResponseCode
-	2,  // 8: hiddifyrpc.LogMessage.level:type_name -> hiddifyrpc.LogLevel
-	3,  // 9: hiddifyrpc.LogMessage.type:type_name -> hiddifyrpc.LogType
-	32, // 10: hiddifyrpc.Hello.SayHello:input_type -> hiddifyrpc.HelloRequest
-	32, // 11: hiddifyrpc.Hello.SayHelloStream:input_type -> hiddifyrpc.HelloRequest
-	5,  // 12: hiddifyrpc.Core.Start:input_type -> hiddifyrpc.StartRequest
-	33, // 13: hiddifyrpc.Core.CoreInfoListener:input_type -> hiddifyrpc.Empty
-	33, // 14: hiddifyrpc.Core.OutboundsInfo:input_type -> hiddifyrpc.Empty
-	33, // 15: hiddifyrpc.Core.MainOutboundsInfo:input_type -> hiddifyrpc.Empty
-	33, // 16: hiddifyrpc.Core.GetSystemInfo:input_type -> hiddifyrpc.Empty
-	6,  // 17: hiddifyrpc.Core.Setup:input_type -> hiddifyrpc.SetupRequest
-	16, // 18: hiddifyrpc.Core.Parse:input_type -> hiddifyrpc.ParseRequest
-	18, // 19: hiddifyrpc.Core.ChangeHiddifySettings:input_type -> hiddifyrpc.ChangeHiddifySettingsRequest
-	33, // 20: hiddifyrpc.Core.GetHiddifySettings:input_type -> hiddifyrpc.Empty
-	5,  // 21: hiddifyrpc.Core.StartService:input_type -> hiddifyrpc.StartRequest
-	33, // 22: hiddifyrpc.Core.Stop:input_type -> hiddifyrpc.Empty
-	5,  // 23: hiddifyrpc.Core.Restart:input_type -> hiddifyrpc.StartRequest
-	22, // 24: hiddifyrpc.Core.SelectOutbound:input_type -> hiddifyrpc.SelectOutboundRequest
-	23, // 25: hiddifyrpc.Core.UrlTest:input_type -> hiddifyrpc.UrlTestRequest
-	24, // 26: hiddifyrpc.Core.GenerateWarpConfig:input_type -> hiddifyrpc.GenerateWarpConfigRequest
-	33, // 27: hiddifyrpc.Core.GetSystemProxyStatus:input_type -> hiddifyrpc.Empty
-	25, // 28: hiddifyrpc.Core.SetSystemProxyEnabled:input_type -> hiddifyrpc.SetSystemProxyEnabledRequest
-	33, // 29: hiddifyrpc.Core.GetConfigCapabilities:input_type -> hiddifyrpc.Empty
-	33, // 30: hiddifyrpc.Core.LogListener:input_type -> hiddifyrpc.Empty
-	29, // 31: hiddifyrpc.TunnelService.Start:input_type -> hiddifyrpc.TunnelStartRequest
-	33, // 32: hiddifyrpc.TunnelService.Stop:input_type -> hiddifyrpc.Empty
-	33, // 33: hiddifyrpc.TunnelService.Status:input_type -> hiddifyrpc.Empty
-	33, // 34: hiddifyrpc.TunnelService.Exit:input_type -> hiddifyrpc.Empty
-	34, // 35: hiddifyrpc.Hello.SayHello:output_type -> hiddifyrpc.HelloResponse
-	34, // 36: hiddifyrpc.Hello.SayHelloStream:output_type -> hiddifyrpc.HelloResponse
-	4,  // 37: hiddifyrpc.Core.Start:output_type -> hiddifyrpc.CoreInfoResponse
-	4,  // 38: hiddifyrpc.Core.CoreInfoListener:output_type -> hiddifyrpc.CoreInfoResponse
-	11, // 39: hiddifyrpc.Core.OutboundsInfo:output_type -> hiddifyrpc.OutboundGroupList
-	11, // 40: hiddifyrpc.Core.MainOutboundsInfo:output_type -> hiddifyrpc.OutboundGroupList
-	8,  // 41: hiddifyrpc.Core.GetSystemInfo:output_type -> hiddifyrpc.SystemInfo
-	7,  // 42: hiddifyrpc.Core.Setup:output_type -> hiddifyrpc.Response
-	17, // 43: hiddifyrpc.Core.Parse:output_type -> hiddifyrpc.ParseResponse
-	4,  // 44: hiddifyrpc.Core.ChangeHiddifySettings:output_type -> hiddifyrpc.CoreInfoResponse
-	19, // 45: hiddifyrpc.Core.GetHiddifySettings:output_type -> hiddifyrpc.HiddifySettingsResponse
-	4,  // 46: hiddifyrpc.Core.StartService:output_type -> hiddifyrpc.CoreInfoResponse
-	4,  // 47: hiddifyrpc.Core.Stop:output_type -> hiddifyrpc.CoreInfoResponse
-	4,  // 48: hiddifyrpc.Core.Restart:output_type -> hiddifyrpc.CoreInfoResponse
-	7,  // 49: hiddifyrpc.Core.SelectOutbound:output_type -> hiddifyrpc.Response
-	7,  // 50: hiddifyrpc.Core.UrlTest:output_type -> hiddifyrpc.Response
-	14, // 51: hiddifyrpc.Core.GenerateWarpConfig:output_type -> hiddifyrpc.WarpGenerationResponse
-	15, // 52: hiddifyrpc.Core.GetSystemProxyStatus:output_type -> hiddifyrpc.SystemProxyStatus
-	7,  // 53: hiddifyrpc.Core.SetSystemProxyEnabled:output_type -> hiddifyrpc.Response
-	26, // 54: hiddifyrpc.Core.GetConfigCapabilities:output_type -> hiddifyrpc.ConfigCapabilityResponse
-	27, // 55: hiddifyrpc.Core.LogListener:output_type -> hiddifyrpc.LogMessage
-	30, // 56: hiddifyrpc.TunnelService.Start:output_type -> hiddifyrpc.TunnelResponse
-	30, // 57: hiddifyrpc.TunnelService.Stop:output_type -> hiddifyrpc.TunnelResponse
-	30, // 58: hiddifyrpc.TunnelService.Status:output_type -> hiddifyrpc.TunnelResponse
-	30, // 59: hiddifyrpc.TunnelService.Exit:output_type -> hiddifyrpc.TunnelResponse
-	35, // [35:60] is the sub-list for method output_type
-	10, // [10:35] is the sub-list for method input_type
-	10, // [10:10] is the sub-list for extension type_name
-	10, // [10:10] is the sub-list for extension extendee
-	0,  // [0:10] is the sub-list for field type_name
+	27, // 5: hiddifyrpc.ParseResponse.response_code:type_name -> hiddifyrpc.ResponseCode
+	2,  // 6: hiddifyrpc.LogMessage.level:type_name -> hiddifyrpc.LogLevel
+	3,  // 7: hiddifyrpc.LogMessage.type:type_name -> hiddifyrpc.LogType
+	28, // 8: hiddifyrpc.Hello.SayHello:input_type -> hiddifyrpc.HelloRequest
+	28, // 9: hiddifyrpc.Hello.SayHelloStream:input_type -> hiddifyrpc.HelloRequest
+	5,  // 10: hiddifyrpc.Core.Start:input_type -> hiddifyrpc.StartRequest
+	29, // 11: hiddifyrpc.Core.CoreInfoListener:input_type -> hiddifyrpc.Empty
+	29, // 12: hiddifyrpc.Core.OutboundsInfo:input_type -> hiddifyrpc.Empty
+	29, // 13: hiddifyrpc.Core.MainOutboundsInfo:input_type -> hiddifyrpc.Empty
+	29, // 14: hiddifyrpc.Core.GetSystemInfo:input_type -> hiddifyrpc.Empty
+	6,  // 15: hiddifyrpc.Core.Setup:input_type -> hiddifyrpc.SetupRequest
+	13, // 16: hiddifyrpc.Core.Parse:input_type -> hiddifyrpc.ParseRequest
+	15, // 17: hiddifyrpc.Core.ChangeHiddifySettings:input_type -> hiddifyrpc.ChangeHiddifySettingsRequest
+	29, // 18: hiddifyrpc.Core.GetHiddifySettings:input_type -> hiddifyrpc.Empty
+	5,  // 19: hiddifyrpc.Core.StartService:input_type -> hiddifyrpc.StartRequest
+	29, // 20: hiddifyrpc.Core.Stop:input_type -> hiddifyrpc.Empty
+	5,  // 21: hiddifyrpc.Core.Restart:input_type -> hiddifyrpc.StartRequest
+	19, // 22: hiddifyrpc.Core.SelectOutbound:input_type -> hiddifyrpc.SelectOutboundRequest
+	20, // 23: hiddifyrpc.Core.UrlTest:input_type -> hiddifyrpc.UrlTestRequest
+	29, // 24: hiddifyrpc.Core.GetSystemProxyStatus:input_type -> hiddifyrpc.Empty
+	21, // 25: hiddifyrpc.Core.SetSystemProxyEnabled:input_type -> hiddifyrpc.SetSystemProxyEnabledRequest
+	29, // 26: hiddifyrpc.Core.GetConfigCapabilities:input_type -> hiddifyrpc.Empty
+	29, // 27: hiddifyrpc.Core.LogListener:input_type -> hiddifyrpc.Empty
+	25, // 28: hiddifyrpc.TunnelService.Start:input_type -> hiddifyrpc.TunnelStartRequest
+	29, // 29: hiddifyrpc.TunnelService.Stop:input_type -> hiddifyrpc.Empty
+	29, // 30: hiddifyrpc.TunnelService.Status:input_type -> hiddifyrpc.Empty
+	29, // 31: hiddifyrpc.TunnelService.Exit:input_type -> hiddifyrpc.Empty
+	30, // 32: hiddifyrpc.Hello.SayHello:output_type -> hiddifyrpc.HelloResponse
+	30, // 33: hiddifyrpc.Hello.SayHelloStream:output_type -> hiddifyrpc.HelloResponse
+	4,  // 34: hiddifyrpc.Core.Start:output_type -> hiddifyrpc.CoreInfoResponse
+	4,  // 35: hiddifyrpc.Core.CoreInfoListener:output_type -> hiddifyrpc.CoreInfoResponse
+	11, // 36: hiddifyrpc.Core.OutboundsInfo:output_type -> hiddifyrpc.OutboundGroupList
+	11, // 37: hiddifyrpc.Core.MainOutboundsInfo:output_type -> hiddifyrpc.OutboundGroupList
+	8,  // 38: hiddifyrpc.Core.GetSystemInfo:output_type -> hiddifyrpc.SystemInfo
+	7,  // 39: hiddifyrpc.Core.Setup:output_type -> hiddifyrpc.Response
+	14, // 40: hiddifyrpc.Core.Parse:output_type -> hiddifyrpc.ParseResponse
+	4,  // 41: hiddifyrpc.Core.ChangeHiddifySettings:output_type -> hiddifyrpc.CoreInfoResponse
+	16, // 42: hiddifyrpc.Core.GetHiddifySettings:output_type -> hiddifyrpc.HiddifySettingsResponse
+	4,  // 43: hiddifyrpc.Core.StartService:output_type -> hiddifyrpc.CoreInfoResponse
+	4,  // 44: hiddifyrpc.Core.Stop:output_type -> hiddifyrpc.CoreInfoResponse
+	4,  // 45: hiddifyrpc.Core.Restart:output_type -> hiddifyrpc.CoreInfoResponse
+	7,  // 46: hiddifyrpc.Core.SelectOutbound:output_type -> hiddifyrpc.Response
+	7,  // 47: hiddifyrpc.Core.UrlTest:output_type -> hiddifyrpc.Response
+	12, // 48: hiddifyrpc.Core.GetSystemProxyStatus:output_type -> hiddifyrpc.SystemProxyStatus
+	7,  // 49: hiddifyrpc.Core.SetSystemProxyEnabled:output_type -> hiddifyrpc.Response
+	22, // 50: hiddifyrpc.Core.GetConfigCapabilities:output_type -> hiddifyrpc.ConfigCapabilityResponse
+	23, // 51: hiddifyrpc.Core.LogListener:output_type -> hiddifyrpc.LogMessage
+	26, // 52: hiddifyrpc.TunnelService.Start:output_type -> hiddifyrpc.TunnelResponse
+	26, // 53: hiddifyrpc.TunnelService.Stop:output_type -> hiddifyrpc.TunnelResponse
+	26, // 54: hiddifyrpc.TunnelService.Status:output_type -> hiddifyrpc.TunnelResponse
+	26, // 55: hiddifyrpc.TunnelService.Exit:output_type -> hiddifyrpc.TunnelResponse
+	32, // [32:56] is the sub-list for method output_type
+	8,  // [8:32] is the sub-list for method input_type
+	8,  // [8:8] is the sub-list for extension type_name
+	8,  // [8:8] is the sub-list for extension extendee
+	0,  // [0:8] is the sub-list for field type_name
 }
 
 func init() { file_hiddify_proto_init() }
@@ -2165,7 +1886,7 @@ func file_hiddify_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_hiddify_proto_rawDesc), len(file_hiddify_proto_rawDesc)),
 			NumEnums:      4,
-			NumMessages:   27,
+			NumMessages:   23,
 			NumExtensions: 0,
 			NumServices:   3,
 		},

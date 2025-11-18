@@ -86,25 +86,6 @@ message OutboundGroupList{
   repeated OutboundGroup items = 1;
 }
 
-message WarpAccount {
-  string account_id = 1;
-  string access_token = 2;
-}
-
-message WarpWireguardConfig {
-  string private_key = 1;
-  string local_address_ipv4 = 2;
-  string local_address_ipv6 = 3;
-  string peer_public_key = 4;
-  string client_id=5;
-}
-
-message WarpGenerationResponse {
-  WarpAccount account = 1;
-  string log = 2;
-  WarpWireguardConfig config = 3;
-}
-
 message SystemProxyStatus {
   bool available = 1;
   bool enabled = 2;
@@ -150,12 +131,6 @@ message SelectOutboundRequest {
 
 message UrlTestRequest {
   string group_tag = 1;
-}
-
-message GenerateWarpConfigRequest {
-  string license_key = 1;
-  string account_id = 2;
-  string access_token = 3;
 }
 
 message SetSystemProxyEnabledRequest {
@@ -225,7 +200,6 @@ service Core {
   rpc Restart (StartRequest) returns (CoreInfoResponse);
   rpc SelectOutbound (SelectOutboundRequest) returns (Response);
   rpc UrlTest (UrlTestRequest) returns (Response);
-  rpc GenerateWarpConfig (GenerateWarpConfigRequest) returns (WarpGenerationResponse);
   rpc GetSystemProxyStatus (Empty) returns (SystemProxyStatus);
   rpc SetSystemProxyEnabled (SetSystemProxyEnabledRequest) returns (Response);
   rpc GetConfigCapabilities (Empty) returns (ConfigCapabilityResponse);

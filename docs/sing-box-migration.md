@@ -27,7 +27,6 @@
 | `github.com/hiddify/ray2sing`      | replace 到 `github.com/hiddify/ray2sing v0.0.0-20240928…`                                 | 直接移除依赖，CLI 不再内嵌 Ray/V2Ray 链接解析（仅支持 JSON / Clash）     | Phase 4 中确认“解析功能由外部工具提供”，避免旧 API 阻断升级 |
 | `github.com/sagernet/quic-go`      | 依赖 `v0.52.0-sing-box-mod.3`（无 ECH 包）                                                | 需要具备 `ech` / `http3_ech`，考虑 vendor sing-box 所用版本或自建模块    | 在决定 sing-box 来源后同步调整                              |
 | `github.com/sagernet/wireguard-go` | replace 到 `github.com/hiddify/wireguard-go v0.0.0-20240727…`                             | 待评估是否仍需 fork；若 upstream 能满足则移除 replace                    | 与 Warp/移动端支持耦合                                      |
-| `github.com/bepass-org/warp-plus`  | replace 到 `github.com/hiddify/warp-plus v0.0.0-20240717…`                                | 功能已从核心移除，待后续完全删掉依赖                                     | warp CLI / gRPC 已退役，暂不再维护                          |
 | `github.com/sagernet/sing-*` 家族  | `sing v0.7.13`、`sing-dns v0.4.6`、`sing-quic v0.5.2-…` 等                                | 与 sing-box 1.12.12 要求一致；后续若升级需逐一验证                       | 暂不需要 replace                                            |
 
 后续在 Phase 1 中将继续细化 `quic-go`、`wireguard-go` 的去向，并在 `docs/sing-box-migration.md` 同步记录。
@@ -43,7 +42,6 @@
 **完成情况：**
 
 - `config/config.go:129-260` 现已统一由 `setOutbounds` 组装 URL Test、Selector、Direct Fragment 等内建出口，全面使用 `option.URLTestOutboundOptions`、`option.SelectorOutboundOptions` 与 `option.DialerOptions` 等新版结构，确保 `Listable` / `Duration` 字段序列化一致。
-- `config/outbound.go:14-175` 与 `config/warp.go:177-270` 负责把旧配置里的 Warp、自定义 TLS trick、Mux、Fragment 等语义映射到新版 `option.Outbound`；在 patch 阶段就补齐 detour、静态 IP、Padding 等字段，避免运行期再做破坏性修改。
 - `config/parser.go:47-134` 将 JSON / V2Ray / Clash 三种解析路径输出统一送入 `patchConfig`，借助 batch worker 并发套用新版 Warp/selector 语义，同时沿用 `libbox.CheckConfig` 做 schema 校验，确保兼容层统一出口。
 - 新增 `config/config_test.go:10-123` 覆盖 selector/URL Test、Warp detour、Direct Fragment dialer 行为；`go test ./config -run TestBuildConfigAddsSelectorAndURLTest` 目前仍会命中 `option.DefaultDNSRule.Server` 等未完成的 1.12 API 映射（详见 `docs/migration-phase4-go-test.txt`），后续在 Stage 5 补齐 Dialer/Rule 兼容层后再启用。
 
