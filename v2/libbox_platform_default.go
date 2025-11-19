@@ -157,10 +157,6 @@ func (p *cliPlatform) UsePlatformInterfaceGetter() bool {
 	return true
 }
 
-func (p *cliPlatform) UsePlatformDefaultInterfaceMonitor() bool {
-	return true
-}
-
 func (p *cliPlatform) UnderNetworkExtension() bool {
 	return false
 }
