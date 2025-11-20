@@ -159,4 +159,6 @@ require (
 	lukechampine.com/blake3 v1.3.0 // indirect
 )
 
+replace github.com/SagerNet/sing-box => ./third_party/sing-box
+
 replace google.golang.org/genproto => google.golang.org/genproto v0.0.0-20251103181224-f26f9409b101

@@ -1,0 +1,4 @@
+[submodule "third_party/sing-box"]
+	path = third_party/sing-box
+	url = git@github.com:FSWLairport/sing-box.git
+	branch = dev
