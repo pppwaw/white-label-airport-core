@@ -1,4 +1,4 @@
-//go:build !android && !ios
+//go:build !android && !ios && (linux || darwin)
 
 package v2
 

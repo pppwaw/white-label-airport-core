@@ -67,7 +67,7 @@ func NewService(options option.Options) (*libbox.BoxService, error) {
 		return nil, E.Cause(err, "encode config")
 	}
 	Log(pb.LogLevel_DEBUG, pb.LogType_SERVICE, "Config content: "+string(content))
-	service, err := libbox.NewService(string(content), newPlatformInterface())
+	service, err := libbox.NewService(string(content), nil)
 	if err != nil {
 		return nil, E.Cause(err, "create service")
 	}
