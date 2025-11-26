@@ -1,5 +1,5 @@
 FROM alpine:latest
-ENV VERSION=v2.6.0
+ENV VERSION=v2.6.1
 WORKDIR /hiddify
 RUN apk add  curl tar gzip libc6-compat # iptables ip6tables
 
